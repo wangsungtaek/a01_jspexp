@@ -25,6 +25,10 @@
 </head>
 <body>
 <%
+// client에서 저장된 쿠키를 서버에서 로딩하여 출력하여
+// 웹화면으로 보여주기위해서
+// request로 다시 서버에 전송하여 getCookies()라는 이름으로
+// 호출하여 사용한다.
 Cookie[] cookies = request.getCookies();
 %>
 	<h3>쿠키값 가져오기.</h3>
