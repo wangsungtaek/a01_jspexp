@@ -20,6 +20,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<%
+	// servlet의 매개변수, 매개변수의 객체의 메서드를 통해서 이미
+	// 만들어진 객체의 참조변수를 사용할 수 있다.
+	request.getParameter("");
+	response.getWriter().print("출력");
+	out.print("출력");
+	session.setAttribute("", "");
+%>
 <body>
 	<h2>페이지 호출</h2>
 	<h3>요청값 : <%=request.getParameter("name") %></h3>

@@ -16,9 +16,16 @@
 		 <input type="submit" value="테이블 생성!!">
 	</form>
 	<%
+	// 물리적으로 파일은 하나이나,
+	// 논리적으로는 전달하는 파일, 입력값을 받는 파일..
 	String cols = request.getParameter("col");
 	String rows = request.getParameter("row");
 	int col=1, row=1; // 
+	// 논리적으로 전달받았을 때 페이지를 구분하여 처리하는 부분
+	// 1. 초기페이지는 요청값이 없기 때문에 cols=null이 할당되어 있다.
+	// 2. submit를 클릭해서 논리적으로 다음에서 cols값이 있을 때,
+	// 조건문에 의해 1/2의 process을 구분하기 위해..
+	
 	if(cols!=null) col = Integer.parseInt(cols);
 	if(rows!=null) row = Integer.parseInt(rows);
 	int cnt=1;
