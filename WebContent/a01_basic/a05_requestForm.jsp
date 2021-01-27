@@ -20,6 +20,14 @@
 </script>
 </head>
 <body>
+	<%--
+	GET방식으로 전송
+		a06_requestRev.jsp?name=홍길동&address=서울신림동&pet=dog&pet=cat
+	POST방식으로 전송
+		form속성 method="post"
+		url 주소 : a06_requestRev.jsp
+		전송되는 데이터 : name=홍길동&address=서울신림동&pet=dog&pet=cat
+	 --%>
    <h3>요청값 처리</h3>
    <form action="a06_requestRev.jsp" method="post">
    		이름:<input type="text" name="name" size="10"> <br>

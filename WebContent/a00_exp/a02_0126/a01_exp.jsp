@@ -25,7 +25,7 @@
 	1) request
 		- HttpServletRequest
 	2) response
-		HttpServletResponse
+		- HttpServletResponse
 --%>
 <%--
 [하] 2. jsp에서 객체선언없이 사용하는 내장된 참조객체를 기술하세요.
@@ -33,10 +33,12 @@
 	2) response : 응답과 관련된 설정 시 사용
 	3) out : 직접 응답을 출력할 때 사용
 	4) session : 세션 관리에 사용
+	jsp ==> servlet로 변경할때, 위객체는 선언되어 있기 때문에 선언없이 사용이 가능하다.
 --%>
 <%--
 [하] 3. request객체의 메서드의 각자 특징과 내용을 기술하세요.
-	1) request.getParameter("key")
+	1) request.getParameter("key") : 단일데이터 String
+		request.getParameterValue("key") : 다중데이터 String[]
 		- client가 주소창이나 form객체를 통해서 전송하는 매개값을 처리하는 객체
 	2) request.getRemoteAddr()
 		- 웹서버에 연결된 클라이언트의 ip주소를 구한다.

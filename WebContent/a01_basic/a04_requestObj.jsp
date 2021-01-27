@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% request.setCharacterEncoding("UTF-8"); 
+<% request.setCharacterEncoding("UTF-8");
+// 한글은 2byte로 전송되기에 encoding이 필요하다.
+// get은 서버에서 지원하는 경우가 많아서, post방식은 설정을 통해서 처리된다.
 String path = request.getContextPath();
+// 프로젝트명 하위에 WebContent폴드를 기준 folder로 지정되기 때문에
+// 사용하는 자원(페이지 링크, 이미지, 외부 css, 외부 js파일)을
+// 효과적으로 로딩하여 처리할 수 있다.
 %>
 <!DOCTYPE html>
 <html>
