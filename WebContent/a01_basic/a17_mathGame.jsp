@@ -51,8 +51,7 @@ ex) 화면에 임의의 숫자
       var inNumObj = document.querySelector("input[name=innum]");
       if(inNumObj.value==""){
          alert("데이터를 입력하세요.");
-         inNumObj.focus();
-         
+         inNumObj.focus();         
       }else{
          if(isNaN(inNumObj.value)){
             alert("숫자를 입력하세요.")

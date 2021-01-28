@@ -1,4 +1,5 @@
 package jspexp.z01_vo;
+
 public class Product {
 	private String name;
 	private int price;
