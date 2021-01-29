@@ -53,8 +53,17 @@
 		Emp emp = (Emp)application.getAttribute("data01");
 2. scope가 지원하는 기본 객체의 메서드..
 	1) .setAttribute("key"", 할당할 객체);
+		ex) 
+		변수하나
+		session.setAttribute("var01",25)' == new Interger(25);
+		session.setAttribute("var02","안녕")' == new String("안녕");
+		session.setAttribute("var03", new Person("홍길동", 25));
 	2) .getAttribute("key") : 특정한 key로 저장된 객체를 가져올 수  있음
-		
+		session.getAttribute("var01")는 object 타입이기에
+		사용할 때는 아래와 같이 Type castion이 필요하다.
+		Integer var01 = (Integer)session.getAttribute("var01");
+		String var02 = (String)session.getAttribute("var02");
+		Person var03 = (Person)session.getAttribute("var03");
  --%>
 <%
 // 1. page Scope 데이터 처리: 현재페이지에서만 사용할 수 있는 범위로 객체 선언.
@@ -71,7 +80,7 @@
 // 4. application.scope 데이터 처리.
 //	서버가 재기동할 때까지 살아있는 범위
 	application.setAttribute("appVar","오길동(application)");
-	
+//	a02_request.jsp에 request에 있는 모든 내용과 response객체의 모든 내용을 전달합니다.
 //	request.getRequestDispatcher("a02_request.jsp").forward(request,response);
 
 %>

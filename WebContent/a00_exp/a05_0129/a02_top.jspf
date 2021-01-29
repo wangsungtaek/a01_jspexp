@@ -1,0 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    import="java.util.*"
+    import="jspexp.z01_vo.*"
+    %>
+<form method="get">
+<ul>
+	<li><input type="submit" name="page" value="로그인" size ="5"/></li>
+	<li><input type="submit" name="page" value="상품"></li>
+	<li><input type="submit" name="page" value="관리자"></li>
+</ul>
+</form>
