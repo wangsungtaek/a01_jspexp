@@ -50,6 +50,28 @@
 </script>
 </head>
 <body>
+	<%--
+# 서버에서 화면별 포함 처리
+1. jsp:include action 태그
+	1) 특정한 외부 jsp 페이지 포함 처리.
+		분리된 servlet을 호출/요청값 전달.
+		포함하는 class와 포함되는 class가 따로 만들어져서 수행된다.
+		<jsp:param 로 name와 value값으로 요청값을 전달하고
+		포함된 jsp에서도 request.getParameter("key")로 받는다.
+	2) page = "포함될 jsp"
+	
+2. jsp:forward action 태그
+	1) 특정한 외부 jsp 페이지로 request, response 전송과
+		함께 이동 처리
+		
+3. <%@ include="jsp파일명"
+	1) 특정한 외부 페이지를 포함 처리.
+		포함된 페이지와 함께
+		하나의 servlet으로 만들어져서 처리된다.
+		변수를 위에서 부터 아래로 선언 순서에 따라 선언하면
+		데이터를 활용할 수 있다.
+	
+	 --%>
 	<%-- 해당 페이지로 요청값 전송 --%>
 	<jsp:include page="a01_top.jsp">
 		 <jsp:param name="name01" value="홍길동"/>

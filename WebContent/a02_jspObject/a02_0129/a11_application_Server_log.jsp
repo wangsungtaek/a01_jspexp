@@ -29,7 +29,12 @@
 	<h4>서블릿 규약 마이너 버전 : <%= application.getMinorVersion() %></h4>
 	<h3>로그 처리.</h3>
 	<%
+	// log("jsp에서 server의  DEMON console로 출력되는 내용")
 	log("로그 메시지 기록2");
+	String name1 = "홍길동";
+	int num03 = 25;
+	int num04 = 30;
+	int sum = num03 + num03;
 	%>
 	로그 메시지를 기록합니다.<br>
 	<%
@@ -37,6 +42,7 @@
 	%>
 	로그 메시지를 기록합니다.<br>
 	<%
+	log(num03 + "+" + num04 + "=" + sum);
 	System.out.println("로그 출력");
 	%>
 <%--

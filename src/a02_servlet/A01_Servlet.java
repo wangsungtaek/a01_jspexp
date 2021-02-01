@@ -36,6 +36,8 @@ public class A01_Servlet extends HttpServlet {
 		// jsp에서는 request, response객체를 선언되어 참조변수를 default로 받는 상황이기 때문에
 		// 그대로 사용할 수 있다.
 		PrintWriter out = response.getWriter();
+		// jsp의 모든 tag들은 out.print()로 포함되어 처리된다.
+		out.print("<h2>안녕하세요</h2>");
 		// out로 선언되어 out은 출려으로 바로 사용할 수 있다.
 		HttpSession session = request.getSession();
 		// sesstion도 선언되어 있어서 바로 사용할 수 있다.

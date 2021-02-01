@@ -29,6 +29,19 @@
 		<tr><th>페이지범위</th><td><%=pageContext.getAttribute("show") %></td></tr>
 		<tr><th>요청범위</th><td><%=request.getAttribute("prodName") %></td></tr>
 		<tr><th>세션범위</th><td>
+		<!-- 
+		1. setAttribute를 설정할 때, 객체인 경우
+			session, setAttribute("key", Object);
+			1) String인 경우에는 하위에 있는 메서드를 호출하지 않는 한
+				null로 표기되어 에러를 발생하지 않는다.
+			2) 일반 객체의 경우에는 메서드를 호출하여 NullPointException을
+				발생하기에 반드시 사전에 if(조건문)으로 예외 처리를 하여야 한다.
+				stack		heap
+				참조변수	실제객체
+				
+				참조변수.메서드() 호출 - heap객체가 없는 상황에서는 NullPointException
+				과 함께 프로그램이 중단되어 버린다.
+		 -->
 		<%
 			if(session.getAttribute("m01") != null){
 			Member m01 = (Member)session.getAttribute("m01");

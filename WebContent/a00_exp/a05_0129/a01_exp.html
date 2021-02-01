@@ -30,6 +30,28 @@
 /*
 [하] 2. class 형태로 Car객체를 선언하고, 종류, 배기량, 최고 속도, 현재 속도, speedUp(), speedDown() 속성을 선언하고, 각 기능에 따라
     출력되게 하세요. 
+    class Car {
+		constructor(kind, cc, maxSpeed, curSpeed) {
+			this.kind = kind;
+			this.cc = cc;
+			this.maxSpeed = maxSpeed;
+			this.curSpeed = curSpeed;
+		}
+		speedUp(){
+			this.curSpeed += 10;
+			if(this.curSpeed > this.maxSpeed){
+				this.curSpeed = this.maxSpeed;
+			}
+			console.log("속도를 높입니다.");
+		};
+		speedDown(){
+			this.curSpeed -= 10;
+			if(this.curSpeed < 0){
+				this.curSpeed = 0;
+			}
+			console.log("속도를 낮춥니다.");
+		};
+}
  */
 	class Car {
 		constructor(kind, volume, maxSpeed, speed) {

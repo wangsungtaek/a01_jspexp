@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*"
@@ -24,6 +25,7 @@
 <%--
 # jsp의 기본 객체
 1. jsp는 변수들을 저장할 때, 특정한 범위로 저장을 할 수 있다.
+	(이때, 활용되는 객체가 session time, 브라우저와 서버관계, 서버)
 	이때, 활용되는 객체가 session scope범위로
 	1) 한 페이지 단위에서 데이터를 저장하고 활용할 수 있는 pageContext,
 	2) 요청 page까지 데이터를 저장하고 활용할 수 있는 request,
@@ -34,6 +36,7 @@
 		request.setAttribute("p01", new Person("홍길동", 27, "서울신림동");
 		요청된 페이지에서.
 	3) 브라우저가 닫힐 때까지 데이터를 저장하고 활용할 수 있는 session,
+		특정한 client(브라우저)와 server(웹 어플리케이션 서버 -톰캣(WAS))관계가 끝날 때까지
 		response.sendRedirect("이동할페이지");
 		location.href="이동할페이지");
 		<a href="이동할페이지">안녕하세요</a>
