@@ -13,6 +13,17 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<h3>VVIP페이지 입니다.</h3>
+	<table>
+		<tr><th>구매자</th>
+			<td><%=request.getParameter("user") %></td></tr>
+		<tr><th>물건명</th>
+			<td><%=request.getParameter("pname") %></td></tr>
+		<tr><th>가격</th>
+			<td><%=request.getParameter("price") %></td></tr>
+		<tr><th>개수</th>
+			<td><%=request.getParameter("cnt") %></td></tr>
+	</table>
 	<%
 	String name = request.getParameter("user");
 	int tot = (Integer)request.getAttribute("tot");

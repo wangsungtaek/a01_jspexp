@@ -47,6 +47,8 @@
 		if(auth.equals("일반사용자")) page1 = "a06_normal.jsp";
 		if(auth.equals("방문자")) page1 = "a06_quest.jsp";
 	%>
+		<%-- 요청값으로 입력한 데이터도 request에 의해서 함께
+		전달할 수 있다. --%>
 		<jsp:forward page="<%=page1 %>"/>
 		<%--
 		RequestDispatcher re = request.getRequestDispatcher("페이지");
