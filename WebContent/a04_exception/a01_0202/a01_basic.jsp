@@ -45,8 +45,10 @@
 	1) 에러페이지를 만들고,
 		<%@ page isErrorPage="true" %>
 		현재페이지가 에러 처리를 위한 페이지 임을 나타낸다.
+		이 다렉티브선언에 의해서 Exception 객체를 사용할 수 있게 처리.
 		예외의 기본 객체인 exception를 참조값으로 가지고 있다.
 		Exception의 참조값이 exception을 활용할 수 있게 된다.
+		
 		ex) exception.getMessage(),
 			exception.printStackTrace()를 활용한다.
 		주의) IE(인터넷익스플로러)에서는 예외가 올바르게
@@ -57,13 +59,21 @@
 		에러의 가망성이 있는 페이지에서 사전에 선언한 에러페이지를 지정.
 
 3. 서버단위(web.xml)에서
+	0) 어레페이지 만들기 <%@ page isErrorPage="true" %>
 	1) 응답 상태 코드별 에러 페이지 지정.
 		<error-page>
 			<error-code>에러코드</error-code>
 			<location>에러페이지 url</location>
 		404 : 해당 페이지가 없을 때, 나타나는 에러..
+		500 : 내부서버에러(예외처리)
 	2) 예외 타입 별 에러 페이지 지정.
-
+		<error-page>
+			<error-type>여러클래스지정</error-type>
+			<location>에러페이지 url</location>
+		ex)
+		<error-page>
+			<error-type>java.lang.NullPointerException</error-type>
+			<location>/a04_exception/a01_0202/a01_basic.jsp</location>
 4. 에러 페이지 우선 순위 및 에러 페이지 지정 형태.
 	1) 각 페이지에 지정된 에러
 	2) web.xml에서 공통지정한 페이지 에러
