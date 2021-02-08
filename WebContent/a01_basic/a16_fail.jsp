@@ -15,20 +15,20 @@ String path = request.getContextPath();
 
 </style>
 <%
-   String id = request.getParameter("id");
+	String id = request.getParameter("id");
 %>
 <script>
-      window.onload=function(){
-         //java, js의 연동 처리..
-         if(confirm("<%=id %>님 로그인 실패\n로그인 화면이동 하시겠습니까 ?")){
-            //js로 페이지 이동처리
-            location.href="a14_login.jsp";
-         }
-      };
+		window.onload=function(){
+			//java, js의 연동 처리..
+			if(confirm("<%=id %>님 로그인 실패\n로그인 화면이동 하시겠습니까 ?")){
+				//js로 페이지 이동처리
+				location.href="a14_login.jsp";
+			}
+		};
 </script>
 </head>
 
 <body>
-   <h3>로그인 실패 :(</h3>
+	<h3>로그인 실패 :(</h3>
 </body>
 </html>

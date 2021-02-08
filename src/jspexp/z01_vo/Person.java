@@ -1,6 +1,7 @@
 package jspexp.z01_vo;
 
 public class Person {
+	
 	private String name;
 	private int age;
 	private String loc;
@@ -28,4 +29,5 @@ public class Person {
 	public void setLoc(String loc) {
 		this.loc = loc;
 	}
+	
 }

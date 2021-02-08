@@ -11,17 +11,7 @@ String path = request.getContextPath();
 <title>Insert title here</title>
 <link rel="stylesheet" href="<%=path %>/a00_com/a00_com.css">
 </head>
-<%--
-ex) 화면에 임의의 숫자
-   @@ x @@ = ? 
-   정답 입력 [   ] 
-         [확인]    ==> 정답을 맞추면 a18_succ.jsp
-               ==> 틀리면 a19_fail.jsp 로 이동처리 
-               
- --%>
  <%   
-    
-    
    int num01 = 5 ;
    int num02 = 10;
    int corNum= num01*num02;
@@ -37,21 +27,24 @@ ex) 화면에 임의의 숫자
    
 %>
 <body>
+
    <h3>구구단 게임</h3>
-   <form>
+   <form method="post">
       <table>
          <tr><th><%=num01 %> X <%=num02 %> = ?</th></tr>
          <tr><th>정답입력: <input type ="text" name="innum"></th></tr>
          <tr><td> <input type ="button" value="정답확인" onclick="valid()"></td></tr>
       </table>
    </form>
+   
 </body>
 <script type="text/javascript">
    function valid(){
       var inNumObj = document.querySelector("input[name=innum]");
       if(inNumObj.value==""){
          alert("데이터를 입력하세요.");
-         inNumObj.focus();         
+         inNumObj.focus();
+         
       }else{
          if(isNaN(inNumObj.value)){
             alert("숫자를 입력하세요.")
@@ -66,17 +59,3 @@ ex) 화면에 임의의 숫자
    
 </script>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

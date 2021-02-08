@@ -1,6 +1,7 @@
 package jspexp.z01_vo;
-
+// jspexp.z01_vo.Procduct
 public class Product {
+
 	private String name;
 	private int price;
 	private int cnt;
