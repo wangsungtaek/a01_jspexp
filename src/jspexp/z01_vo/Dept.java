@@ -5,11 +5,12 @@ public class Dept {
 	private String dname;
 	private String loc;
 	public Dept() {
-		super();
-		// TODO Auto-generated constructor stub
+	}
+	public Dept(String dname, String loc) {
+		this.dname = dname;
+		this.loc = loc;
 	}
 	public Dept(int deptno, String dname, String loc) {
-		super();
 		this.deptno = deptno;
 		this.dname = dname;
 		this.loc = loc;

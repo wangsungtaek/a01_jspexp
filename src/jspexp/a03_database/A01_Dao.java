@@ -1,5 +1,5 @@
 package jspexp.a03_database;
-
+//jspexp.a03_database.A01_Dao
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -8,6 +8,7 @@ import jspexp.z01_vo.Emp;
 import jspexp.z01_vo.Emp3;
 import jspexp.z01_vo.Emp4;
 import jspexp.z01_vo.Emp5;
+import jspexp.z01_vo.JobSalary;
 
 public class A01_Dao {   //DAO : database access object
    // 1. 데이터베이스 연결 처리
@@ -29,6 +30,7 @@ public class A01_Dao {   //DAO : database access object
       // 2. 특정 서버
       //      - 접속 정보 : 드라이버명:@ip:port:sid
       String info = "jdbc:oracle:thin:@localhost:1521:xe";
+      //드라이버 매니저 객체를 통해서 Connection 객체를 생성
       try {
          con = DriverManager.getConnection(info, "scott", "tiger");
          System.out.println("접속 성공");
@@ -42,11 +44,38 @@ public class A01_Dao {   //DAO : database access object
    public static void main(String[] args) {
       // TODO Auto-generated method stub
       A01_Dao dao = new A01_Dao();
-      dao.empList();
+//      dao.empList();
+//      dao.deptList();
+      dao.deptList(new Dept("",""));
+      dao.jobSalList("1000");
    }
+   /*
+   1. sql 작성
+   2. VO 객체 생성
+   3. 기능 메서드 선언.
+   		1)요청에 의한 입력 : 매개변수로 활용
+   		2) 데이터의 결과에 따라 리턴값 지정.
+   			-insert, update, delete : void
+   				ex) public void inserEmp(Emp ins)
+   			-단위 변수나 한개의 데이터
+   				회원이 등록된 여부 select * from member where...
+   				public boolean void isMember(String id, String pass)
+   				상품의 갯수 : select count(*) from member where...
+   				public int memCount(Member sch)
+   				회원 상세정보 : select * from member where id = @@@
+   				public Member getMember(String id)
+   			- 여러개의 데이터
+   				ex)
+   				공지사항
+   				public ArrayList<Board> boradList(Board sch)
+   				회원정보리스트
+   				public ArrayList<Member> mlist(Membeer sch)
+    */
+   
+   
    // 조회 처리 메서드.. (매개변수 없는 처리)
    public ArrayList<Emp> empList(){
-      ArrayList<Emp> list = null;
+      ArrayList<Emp> list = new ArrayList<Emp>();
       // 1. 공통메서드 호출
       try {
          setCon();
@@ -81,19 +110,34 @@ public class A01_Dao {   //DAO : database access object
         	 System.out.print(rs.getDouble("comm")+"\t");
         	 System.out.print(rs.getInt("deptno")+"\n");
         	 
+        	 // 1. 객체 생성과 할당.
+        	 Emp e = new Emp(rs.getInt("empno"),
+        			 		 rs.getString(2),
+        			 		 rs.getString(3),
+        			 		 rs.getInt(4),
+        			 		 rs.getDate("hiredate"),
+        			 		 rs.getDouble(6),
+        			 		 rs.getDouble(7),
+        			 		 rs.getInt(8));
+        	 
+        	 // 2. ArrayList에 할당.
+        	 list.add(e);
          }
-      // 4. 자원의 해제
-         rs.close();
-         stmt.close();
-         con.close();
-      // 5. 예외 처리
-      } catch (SQLException e1) {
-         // TODO Auto-generated catch block
-         e1.printStackTrace();
-         System.out.println(e1.getMessage());
-      }catch(Exception e) {
-    	  System.out.println(e.getMessage());
-      }
+			System.out.println("객체의 갯수 : " + list.size());
+			System.out.println("첫번째 행의 ename" + list.get(0).getEname());
+
+			// 4. 자원의 해제
+			rs.close();
+			stmt.close();
+			con.close();
+			// 5. 예외 처리
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			System.out.println(e1.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
    
       
       
@@ -112,7 +156,7 @@ public class A01_Dao {   //DAO : database access object
    // ex) Dept를 조회하는 메서드를 선언하세요 Dept VO객체 활용
    // ex)select * from dept; 처리
    public ArrayList<Dept> deptList(){
-      ArrayList<Dept> dlist = null;
+      ArrayList<Dept> dlist = new ArrayList<Dept>();
       // 1. 연결
       try {
     	setCon();  
@@ -123,9 +167,17 @@ public class A01_Dao {   //DAO : database access object
     	rs=stmt.executeQuery(sql);
     	while(rs.next()) {	//행단위 변경
     		System.out.print(rs.getInt(1)+"\t");
-    		System.out.print(rs.getInt(2)+"\t");
-    		System.out.println(rs.getInt("loc"));
+    		System.out.print(rs.getString(2)+"\t");
+    		System.out.println(rs.getString("loc"));
+    		
+    		Dept d = new Dept(rs.getInt(1),
+    						  rs.getString(2),
+    						  rs.getString("loc"));
+    		dlist.add(d);
     	}
+    	System.out.println("dlist의 크기 : "+dlist.size());
+    	System.out.println("두번째 부서이름 : "+dlist.get(1).getDname());
+    	
       // 4. 자원해제 : 마지막부터 없애준다.
     	rs.close();
     	stmt.close();
@@ -144,6 +196,80 @@ public class A01_Dao {   //DAO : database access object
       
       return dlist;
    }
+   
+   public ArrayList<Dept> deptList(Dept sch) {
+	   ArrayList<Dept> dlist = new ArrayList<Dept>();
+	   
+	   try {
+		   // 1. 연결
+		   setCon();
+		   // 2. 대화 sql
+		   String sql = "	SELECT *\n"
+		   		+ "	FROM dept\n"
+		   		+ "	WHERE dname LIKE '%'||'"+sch.getDname()+"'||'%'\n"
+		   		+ "	AND loc LIKE '%'||'"+sch.getLoc()+"'||'%'";
+		   stmt = con.createStatement();
+		   
+		   // 3. 결과
+		   rs = stmt.executeQuery(sql);
+		   while(rs.next()) {
+			   dlist.add(new Dept(rs.getInt(1),
+					   			  rs.getString(2),
+					   			  rs.getString(3)));
+		   }
+		   System.out.println("데이터 크기:"+dlist.size());
+		   // 4. 자원해제
+		   rs.close();
+		   stmt.close();
+		   con.close();
+		   // 5. 예외처리.
+	   } catch (SQLException e) {
+		   e.printStackTrace();
+		   System.out.println("## db처리 예외 ##");
+		   System.out.println(e.getMessage());
+	   } catch (Exception e) {
+		   e.printStackTrace();
+		   System.out.println("## 일반 예외 ##");
+		   System.out.println(e.getMessage());
+	   }
+	   return dlist;
+   }
+
+   public ArrayList<JobSalary> jobSalList(String salary){
+	   ArrayList<JobSalary> list = new ArrayList<JobSalary>();
+	   try {
+		   // 1. 연결
+		   setCon();
+		   // 2. 대화
+		   String sql = "SELECT job, count(*) cnt,\n"
+		   		+ "		round(avg(sal)) avgsal\n"
+		   		+ "FROM EMP\n"
+		   		+ "GROUP BY job\n"
+		   		+ "having round(avg(sal)) >= "+salary+"\n"
+		   		+ "ORDER BY job";
+		   stmt = con.createStatement();
+		   // 3. 결과
+		   rs = stmt.executeQuery(sql);
+		   while(rs.next()) {
+			   list.add(new JobSalary(rs.getString(1),
+					   				   rs.getInt(2),
+					   				   rs.getInt(3)));
+		   }
+		   // 4. 해제
+		   rs.close();
+		   stmt.close();
+		   con.close();
+		   // 5. 예외 처리
+	   } catch (SQLException e) {
+		   e.printStackTrace();
+		   System.out.println(e.getMessage());
+	   } catch (Exception e) {
+		   System.out.println(e.getMessage());
+	   }
+	   
+	   return list;
+   }
+   
    // ex) select * from emp where empno=7780 (empno는 유일키) 처리 메서드
    public Emp getEmp(int empno) {
       Emp e = null;
@@ -182,4 +308,5 @@ public class A01_Dao {   //DAO : database access object
    //public ArrayList<Emp5> elist2(int part){
       
    //}
+   
 }

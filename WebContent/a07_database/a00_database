@@ -1,6 +1,11 @@
 # jsp에서 database 연동 처리..
 1. 처리구조
 	client ==> 웹어플리케이션 서버 ==> DB server
+				1) 요청값
+				2) Dao(연결, 기능메서드 데이터가져오기)
+				3) 요청값 Dao의 데이터를 
+					통한 화면처리.
+					
 	ex) 특정한 로그인페이지를 서버에 요청하면(url)
 		서버는 로그인화면을 전송한다.
 		클라이언트는 id, pass를 입력하고 다시 submit를 통해서 
@@ -12,9 +17,18 @@
 			매개변수를 통해서 id,pass전달 후 데이터 확인(기능 메서드2)
 				sql과 Statement객체, ResultSet객체를 통해서 결과를 가져온다.
 				public boolean hasMember(String id, String pass){}
+	
+			ex) Dao dao = new Dao()
+				boolean hasMem = dao.hasMember(id, pass);
+				ArrayList<Member> list = dao.getMember();
+			
 			response 객체를 통해서 해당 id,pass통해 DB 데이터가 있는지 여부를
 			client로 전달한다.
-
+				<%if(hasMember) %>
+					<%=id %>님은 회원으로 동록되어 있습니다.
+				<%} else {%>
+					<%=id %>님은 등록된 회원이 아닙니다.
+				<%} %>
 2. jsp에 처리 내용
 	1) 요청값 받기
 	2) DAO 선언
@@ -45,7 +59,8 @@
 		- ResultSet : 데이터를 받는 처리하는 객체 (2차원테이블 구조와 동일)
 			: select(필요),
 				insert, update, delete(필요X) - commit(), rollback()
-		- 접속해제메서드 .close()
+		- 접속해제메서드 .close() : 메모리에 있는 자원들을 해제 처리
+			마지막에 생성된 객체부터 역순위로 해제하여야 한다.
 		- 예외처리(SQLException)을 반드시 처리하여야 한다.
 
 5. 조회 처리..
@@ -67,9 +82,31 @@
 	2) 결과를 확인해서 단위 데이터 VO(value object)를 작성한다.
 		emp의 조회결과의 단위 데이터를 class Emp{ private in empno...}
 		단위 데이터를 통해서 DB에서 데이터를 입력된 결과를 받아, 화면에서 처리할 수 있다.
+	
+	1. 화면작성, 요청값 처리
+	2. sql를 사용해서 조회 확인.
+	3. 결과를 확인해서 단위 데이터 VO(value Object)를 작성한다.
+	4. DAO작성
+		1) Connection 이해 공통
+		2) 연결메서드
+		3) 조회 메서드
+			- 연결
+			- 각 객체간의 연결 처리
+			- ResultSet while 처리
+			- ArrayList 반복문 데이터 처리
+	5. 화면호출
+		1) DAO 호출
+		2) 화면처리
+	
+	# 원인
+	1. 이해부족
+	2. 연습부족
+	
 		
 	3) DAO 작성
-		- connection 처리
+		- connection 처리 : 공통 기능 - 연결처리 jdbc,
+			접속정보(ip, port, sid, 계정, 비밀번호)
+			Connection객체에 생성.
 		- 조회기능 메서드 선언 VO, ArrayList<VO> 리턴값 선언,
 			메서드명 매개변수 객체나 문자열을 입력받게 구조를 만든다.
 			public ArrayList<Emp> elist(String ename,VO...){
@@ -78,29 +115,62 @@
 		
 			}
 		- 조회기능 메서드 안에서 처리할 내용
-			1. 공통연결메서드 호출
+			1. 공통연결메서드 호출(Connection 객체 생성)
 			2. Statement 객체 생성.(연결객체 - Connection)
 			3. ResultSet 객체 생성.(대화객체 - Statement)
 				-next() : 행단위 변경
-				-getXXX("컬럼명") : 열단위 호출.
+				-getXXX("컬럼명")/gitXXX(순서번호) : 열단위 호출.
+					cf) 순서번호 1부터 시작, select에서 나열된 순서
+						select ename, job, empno
+						rs.getString(1) : ename의 데이터
+						rs.getString("job") : job의 데이터
+						rs.getInt(3) : empno의 데이터
 				==> 1개의 데이터인 경우 : VO(단일)
+					ex) public Member login(String id, String pass)
 				==> 다중의 행단위 여러 데이터인 경우 : ArrayList<VO>
 				마지막에 객체의 참조변수를 return;
+					ex) public ArrayList<Member> memList(Member sch){}
+				- 리턴할 객체에 데이터 할당 처리..
+					ArrayList<Member> mlist = null;
+					// 리턴할 객체에 실제 데이터를 할당해서 처리할 수 있도록 한다.
+					while(rs.next()) {
+						// 1. 각 행마다 단위를 객체를 생성.
+						Member m = new Member();
+						// 2. 객체 안에 데이터베이스에서 온 데이터를 할당.
+								1) 생성자를 통해서
+									new Member(rs.getString(1), ...);
+								2) setXXX메서드를 통해서
+									m.setId(rs.getString("id"));
+						// 3. ArrayList에 추가..
+						mlist.add(m);
+					}
+					System.out.println("할당된 객체 수: "+mlist.size());
+				
+				
+				
+				
 			4. 자원의 해제..
+				마지막에 객체가 생성된 객체부터 역순위로 .close()메서드를 통해서
+				자원을 해제해준다.
 			5. 예외 처리..
+				계층 구조로 필수 예외 처리 SQLException, Exception..
+				
 			
 	4) jsp 화면에서 DAO 객체 호출, 기능 메서드에 요청값 처리로 매개변수로 객체 전달,
 		return 객체를 이용하여, 반복문을 통해서 화면에 처리..
-		ex ) 
-		VO : 테이블의 컬럼명이 아니라 sql을 통해서 나타나는 타이틀명/데이터 타입을 기준으로 
-			vo class의 속성명을 정한다.
-			empno number ==> private int empno;
-			ename varchar ==> private String ename;
-			job varchar2 ==> private String job;
-			*/
-			SELECT empno||'-'||ename info, ''||sal salary
-			FROM emp;
-					
+			1) import = "패키지명.A01_Dao"
+			2) A01_Dao dao = new Dao();
+				ArrayList<Member>
+				mlist = dao.memberList(new Member(id, name));
+			3) for문을 통해서 화면 출력
+				for(Member m : mlist) {
+					<tr>
+					<td><%=m.getId() %></td>
+					<td><%=m.getName() %></td>
+					<td><%=m.getAuth() %></td>
+					<td><%=m.getPoint() %></td>
+				}
+
 		
 		
 		
