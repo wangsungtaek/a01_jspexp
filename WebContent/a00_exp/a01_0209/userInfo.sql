@@ -23,6 +23,12 @@ INSERT INTO userinfo(u_id, u_pw, name, point, address, regdate)
 	 VALUES ('cccc', '3333', 'young', 1300, '수원 매탄', sysdate);
 INSERT INTO userinfo(u_id, u_pw, name, point, address, regdate) 
 	 VALUES ('dddd', '4444', 'song', 2000, '청주 개신동', sysdate);
+INSERT INTO userinfo(u_id, u_pw, name, point, address, regdate) 
+	 VALUES ('eeee', '5555', 'kim', 2000, '청주 율량동', sysdate);
+
 	
 SELECT * FROM userinfo;
+SELECT * FROM userinfo
+WHERE u_id LIKE '%%'
+AND name LIKE '%%';
 	 
