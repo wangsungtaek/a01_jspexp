@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"
     import="java.util.*"
     import="jspexp.z01_vo.*"
-    import="jspexp.a03_database.A01_Dao"
+    import="jspexp.a03_database.A02_DeptDao"
     %>
 <% request.setCharacterEncoding("UTF-8");
    String path = request.getContextPath();
@@ -40,7 +40,28 @@
 	3) 요청값 null에 대한 default설정
 	4) DB처리 메서드 호출..
 	5) for문을 통한 화면처리.
-
+===
+등록처리
+1. 리스트 화면
+	등록 버튼으로 등록화면이동 처리
+2. 등록화면
+	등록내용 form, 데이터
+	요청값 받기
+	VO객체로 할당
+3. A02_DeptDao.java
+	1) 공통
+	2) 기능 메서드 public void insertDept(Dept ins){}
+		- 연결
+		- autoCommit(false)
+		- 대화
+		- commit
+		- 자원해제
+		- exception
+4. 등록화면 dao 호출.
+	1) 요청값에 의해 할당된 vo, dao 기능메서드에
+		매개값으로 할당.
+	2) script 등록완료, 조회페이지이동.
+	
  --%>
 <%
 	String dname = request.getParameter("dname");
@@ -49,7 +70,7 @@
 	if(loc==null) loc="";
 	log("#### dname:"+dname);
 	log("#### loc:"+loc);
-	A01_Dao dao = new A01_Dao();
+	A02_DeptDao dao = new A02_DeptDao();
 	ArrayList<Dept> dlist = dao.deptList(new Dept(dname, loc));
 %>
 <body>
@@ -63,7 +84,7 @@
 		<tr><td colspan="2">
 			<input type="submit" value="검색"/>
 			<input type="button" value="등록"
-			onclick="location.href='a11_deptlnsForm.jsp'"/></td></tr>
+			onclick="location.href='a20_deptlnsForm.jsp'"/></td></tr>
 	</table>
 	
 	<table>
