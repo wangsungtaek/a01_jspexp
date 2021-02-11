@@ -91,6 +91,51 @@
         조회화면 출력 : 제품번호, 물건명, 물건가격, 물건재고량, 
               최근입고일 조회조건(물건명, 물건가격 from,to) 
 -->
-
+<%
+	String pname_ = request.getParameter("pname");
+	String from_ = request.getParameter("priceFrom");
+	String to_ = request.getParameter("priceTo");
+	String pname = "";
+	int from = 0;
+	int to = 0;
+	if(pname_ != null && !pname_.equals("")) pname = pname_;
+	if(from_ != null && !from_.equals("")) from = Integer.parseInt(from_);
+	if(to_ != null && !to_.equals("")) to = Integer.parseInt(to_);
+	
+	A03_ProductDao pdao = new A03_ProductDao();
+	ArrayList<Product2> prods = pdao.produtList(pname, from, to);
+%>
+	<h3>물건정보</h3>
+	<form method="post">
+	<table>
+		<tr><th>물건명</th><td><input type="text" name="pname" value="<%=pname %>"/></td></tr>
+		<tr><th>물건가격</th>
+			<td><input type="text" name="priceFrom" value="<%=from %>"/> ~
+				<input type="text" name="priceTo" value="<%=to %>"/></td></tr>
+		<tr><td colspan="2">
+			<input type="submit" value="검색"/>
+			<input type="button" value="제품등록" onclick="location.href='z03_productIns.jsp'"/></td></tr>
+	</table>
+	<table>
+		<tr><th>제품번호</th>
+			<th>물건명</th>
+			<th>물건가격</th>
+			<th>재고량</th>
+			<th>최근입고일</th><tr>
+		<%for(Product2 prod : prods) { %>
+			<tr ondblclick="prodDetail(<%= prod.getPno()%>)">
+				<td><%=prod.getPno() %></td>
+				<td><%=prod.getPname() %></td>
+				<td><%=prod.getPrice() %></td>
+				<td><%=prod.getCnt() %></td>
+				<td><%=prod.getWrhsdate() %></td></tr>
+		<%} %>
+	</table>
+	</form>
+	<script type="text/javascript">
+		function prodDetail(pno){
+			location.href = "z03_productDetail.jsp?pno="+pno;	
+		}
+	</script>
 </body>
 </html>
