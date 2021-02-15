@@ -47,7 +47,7 @@ public class A01_Dao {   //DAO : database access object
    }
 /*
 1. sql작성
-2. VO 객체 생성
+2. VO 객체 생성 : sql의 결과값에 따른 컬럼명과 type을 확인하여 작성.
 3. 기능 메서드 선언.
    1) 요청에 의한 입력 : 매개변수로 활용.
    2) 데이터의 결과에 따라 리턴값 지정.
@@ -158,7 +158,7 @@ public class A01_Dao {   //DAO : database access object
    // ex) emp5
    //public ArrayList<Emp5> elist2(int part){
 
-// 조회 처리 메서드.. (매개변수 없는 처리)
+   // 조회 처리 메서드
    public ArrayList<Emp> empList(String ename, String job){
       ArrayList<Emp> list = new ArrayList<Emp>();
       // 1. 공통메서드 호출
@@ -243,7 +243,76 @@ public class A01_Dao {   //DAO : database access object
       
       return list;
    }
+ 
+   // 조회 처리 메서드 (PrepardStatement 사용)
+   public ArrayList<Emp> empList2(String ename, String job){
+/*
+# PreparedStatement 객체 활용하기.
+1. SQL의 틀을 미리 정해 놓고, 나중에 값을 지정하는 방식.
+   select *
+   from emp
+   where ename like '%'||?||'%'
+   and job like '%'||?||'%'
+   pstmt.setString(1, "홍"); ?의 순서 1부터 붙여서 사용한다.
+2. 왜 사용하는가?
+	1) sql injection을 막기위해 사용된다.
+	2) db 서버의 sql해석 속도를 향상시켜 빠른 처리를 한다.
+ */
+	      ArrayList<Emp> list = new ArrayList<Emp>();
+	      // 1. 공통메서드 호출
+	      try {
+	         setCon();
+	      // 2. Statement 객체 생성 (연결객체 - Connection)
+	         String sql = "   SELECT *\r\n"
+	               + "   from emp2 e\r\n"
+	               + "   WHERE ename like '%'||upper( ? )||'%'\r\n"
+	               + "   AND job LIKE '%'||upper( ? )||'%'"
+	               + " ORDER BY empno desc";
+	         System.out.println(sql);
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setString(1, ename);
+	         pstmt.setString(2, job);
+	         
+	         rs = pstmt.executeQuery();
+	
+	         int cnt=1;
+	         while(rs.next()) {
+	            
+	            System.out.print(cnt++ + ":" + rs.getInt(1)+"\t");
+	            System.out.print(rs.getString("ename")+"\t");
+	            System.out.print(rs.getString("job")+"\t");
+	            System.out.print(rs.getInt("mgr")+"\t");
+	            System.out.print(rs.getDate("hiredate")+"\t");
+	            System.out.print(rs.getDouble("sal")+"\t");
+	            System.out.print(rs.getDouble("comm")+"\t");
+	            System.out.print(rs.getInt("deptno")+"\n");
+	           
 
+	            Emp e = new Emp(rs.getInt("empno"),rs.getString(2),
+	                  rs.getString(3),rs.getInt(4),rs.getDate("hiredate"),
+	                  rs.getDouble(6),rs.getDouble(7),rs.getInt(8));
+
+	            list.add(e);
+	            
+	         }
+	         System.out.println("객체의 갯수:"+list.size());
+	         System.out.println("첫번째 행의 ename : "+list.get(0).getEname());
+	         System.out.println("두번째 행의 ename : "+list.get(1).getEname());
+
+	         rs.close();
+	         pstmt.close();
+	         con.close();
+	      // 5. 예외 처리
+	      } catch (SQLException e1) {
+	         // TODO Auto-generated catch block
+	         e1.printStackTrace();
+	         System.out.println(e1.getMessage());
+	      }catch(Exception e) {
+	         System.out.println(e.getMessage());
+	      }
+	      return list;
+   }
+   
 // ex) Dept를 조회하는 메서드를 선언하세요 Dept VO객체 활용
    // ex)select * from dept; 처리
    public ArrayList<Dept> deptList(){
@@ -278,6 +347,7 @@ public class A01_Dao {   //DAO : database access object
       }
       return dlist;
    }
+   
    public ArrayList<Dept> deptList(Dept sch){
       ArrayList<Dept> dlist = new ArrayList<Dept>();
       //1. 연결
@@ -314,6 +384,7 @@ public class A01_Dao {   //DAO : database access object
    
       return dlist;
    }
+   
    public ArrayList<JobSalary> jobSalList(int salary){
       ArrayList<JobSalary> list = new ArrayList<JobSalary>();
       try {
@@ -518,18 +589,18 @@ INSERT INTO emp2 values(emp21_seq.nextval, '홍길동','사원',7780,
 		   stmt.close();
 		   con.close();
 		   
-	   } catch(SQLException e) {
-		   e.printStackTrace();
-		   System.out.println("db 처리 에리");
-		   try {
-			con.rollback();
-		   } catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		   }
-	   } catch(Exception e) {
-		   System.out.println("일반에러");
-	   }
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("db 처리 에리");
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} catch (Exception e) {
+			System.out.println("일반에러");
+		}
    }
 
 	public Emp getEmp(int empno) {
@@ -574,5 +645,7 @@ public static void main(String[] args) {
 //	   	dao.insertEmp(ins);
 //	   	Dept ins = new Dept(50, "aaaa", "bbbb");
 //	   	dao.insertDept(ins);
+		ArrayList<Emp> elist = dao.empList2("","");
+		System.out.println(elist.size());
    }
 }

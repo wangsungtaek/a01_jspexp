@@ -33,14 +33,41 @@ public class A02_DeptDao {
 			System.out.println(e.getMessage());
 		}
 	}
-
+	
 	public Dept getDept(int deptno) {
 		Dept d=null;
 		try {
 			setCon();
-			String sql = "select * from dept2 where deptno="+deptno;
+			String sql = "select * from dept10 where deptno="+deptno;
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
+			
+			if (rs.next()) {
+				d = new Dept(rs.getInt(1),
+							 rs.getString(2),
+							 rs.getString(3));
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return d;
+	}
+
+	// PreparedStatement
+	public Dept getDept2(int deptno) {
+		Dept d=null;
+		try {
+			setCon();
+			String sql = "select * from dept10 where deptno= ? ";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, deptno);
+			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
 				d = new Dept(rs.getInt(1),
@@ -86,6 +113,7 @@ public class A02_DeptDao {
 		}
 		return dlist;
 	}	
+	
 	public ArrayList<Dept> deptList(Dept sch) {
 		ArrayList<Dept> dlist = new ArrayList<Dept>();
 		// 1. 연결
@@ -118,6 +146,8 @@ public class A02_DeptDao {
 
 		return dlist;
 	}
+	
+
 	public void insertDept(Dept ins) {
 		try {
 			setCon();

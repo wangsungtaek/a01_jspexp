@@ -34,5 +34,34 @@ CREATE TABLE dept2
 AS SELECT * FROM dept;
 
 
-SELECT * FROM dept2;
+SELECT * FROM dept10;
 SELECT * FROM emp2 where empno =7369;
+
+CREATE TABLE product2 (
+	pno NUMBER PRIMARY KEY,
+	name VARCHAR2(50),
+	price NUMBER,
+	cnt NUMBER,
+	credte DATE,
+	comp VARCHAR2(100),
+	incomdte DATE,
+	inmanager VARCHAR2(30)
+);
+CREATE SEQUENCE prod2_seq
+	START WITH 10000
+	INCREMENT BY 1
+	MINVALUE 10000
+	MAXVALUE 99999
+	NOCYCLE;
+
+DROP TABLE product2;
+
+-- 등록 sql
+INSERT INTO product2 VALUES(prod2_seq.nextval, '사과',2000,100,sysdate,
+	'좋은농원', sysdate, '홍길동');
+
+-- 조회 sql
+SELECT * FROM PRODUCT2 WHERE name LIKE '%'||''||'%'
+   AND price BETWEEN 0 AND 99999 ORDER BY pno desc;
+-- 상세 sql
+SELECT * FROM PRODUCT2 WHERE PNO = 10002;
