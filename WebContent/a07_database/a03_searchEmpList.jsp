@@ -15,13 +15,14 @@
 <link rel="stylesheet" 
 	href="<%=path%>/a00_com/a00_com.css">
 <style>
-
+	tr:hover{background: yellow;}
 </style>
 <script>
 	window.onload=function(){
       
 	};
 </script>
+</head>
 <%--
 1. 화면구성
 2. sql작성
@@ -34,7 +35,7 @@
 5. 요청값과 dao기능메서드 매개변수 데이터 처리
 6. 화면출력
  --%>
-</head>
+
 <body>
 
 	<h3>사원정보검색</h3>

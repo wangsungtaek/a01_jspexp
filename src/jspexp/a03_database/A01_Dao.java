@@ -501,14 +501,6 @@ public class A01_Dao {   //DAO : database access object
          
       
 */
-   
-   // ex) emp5
-   //public ArrayList<Emp5> elist2(int part){
-
-// ex) emp5
-   //public ArrayList<Emp5> elist2(int part){
-
-// 조회 처리 메서드.. (매개변수 없는 처리)
    public ArrayList<Member5> memberList(String id, String name){
       ArrayList<Member5> list = new ArrayList<Member5>();
       // 1. 공통메서드 호출
@@ -554,21 +546,9 @@ public class A01_Dao {   //DAO : database access object
          System.out.println(e.getMessage());
       }
 
-      String info = "jdbc:oracle:thin:@localhost:1521:xe";
-      try {
-         con = DriverManager.getConnection(info, "scott", "tiger");
-      } catch (SQLException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-      }
-      System.out.println("접속 성공");
-      
       return list;
    }
-/*
-INSERT INTO emp2 values(emp21_seq.nextval, '홍길동','사원',7780,
-						to_date('2021/05/01', 'YYYY/MM/DD'),3500,100,10);
- */
+
    public void insertEmp(Emp ins) {
 	   
 	   try {
@@ -578,7 +558,7 @@ INSERT INTO emp2 values(emp21_seq.nextval, '홍길동','사원',7780,
 		   		+ "'"+ins.getEname()+"',"
 		   		+ "'"+ins.getJob()+"',"
    				+ ""+ins.getEmpno()+","
-		   		+ "to_date('"+ins.getHiredate_s()+"', 'YYYY/MM/DD'),"
+		   		+ "to_date('"+ins.getHiredate_s()+"', 'YYYY-MM-DD'),"
    				+ ""+ins.getSal()+","+ins.getComm()+","
 				+ ""+ins.getDeptno()+")";
 		   
@@ -603,49 +583,85 @@ INSERT INTO emp2 values(emp21_seq.nextval, '홍길동','사원',7780,
 		}
    }
 
-	public Emp getEmp(int empno) {
-		Emp emp = null;
-
-		try {
-			setCon();
-			String sql = "SELECT * FROM emp2 where empno =" + empno;
-			stmt = con.createStatement();
-
-			rs = stmt.executeQuery(sql);
-
-			if (rs.next()) {
-
-				emp = new Emp(rs.getInt("empno"), rs.getString(2), rs.getString(3), rs.getInt(4),
-						rs.getDate("hiredate"), rs.getDouble(6), rs.getDouble(7), rs.getInt(8));
-
+   public void updateEmp(Emp upt) {
+	   
+	   try {
+		   setCon();
+		   con.setAutoCommit(false);
+		   
+		   String sql = "UPDATE EMP2\n"
+		   		+ "   SET ename = ?,\n"
+		   		+ "   	   job = ?,\n"
+		   		+ "   	   mgr = ?,\n"
+		   		+ "   	   hiredate = to_date(?, 'YYYY-MM-DD'),\n"
+		   		+ "   	   sal = ?,\n"
+		   		+ "   	   comm = ?,\n"
+		   		+ "   	   deptno = ?\n"
+		   		+ "WHERE empno = ?";
+		   
+		   pstmt = con.prepareStatement(sql);
+		   pstmt.setString(1, upt.getEname());
+		   pstmt.setString(2, upt.getJob());
+		   pstmt.setInt(3, upt.getMgr());
+		   pstmt.setString(4, upt.getHiredate_s());
+		   pstmt.setDouble(5, upt.getSal());
+		   pstmt.setDouble(6, upt.getComm());
+		   pstmt.setInt(7, upt.getDeptno());
+		   pstmt.setInt(8, upt.getEmpno());
+		   
+		   pstmt.executeUpdate();
+		   
+		   con.commit();
+		   
+		   pstmt.close();
+		   con.close();
+		   
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("db 처리 에리");
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
 			}
-
-			rs.close();
-			stmt.close();
-			con.close();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-			System.out.println(e1.getMessage());
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("일반에러");
 		}
-		return emp;
-	}
-
-public static void main(String[] args) {
-		A01_Dao dao = new A01_Dao();
-//		dao.empList();
-//		dao.deptList();
-//		dao.empList("","");
-//		dao.deptList(new Dept("",""));
-//		dao.jobSalList(0);
-//	   	dao.memberList("", "");
-//	   	Emp ins = new Emp(0,"김길동4","대리",7080,"2010/12/12",
-//			  			4000,100,20);
-//	   	dao.insertEmp(ins);
-//	   	Dept ins = new Dept(50, "aaaa", "bbbb");
-//	   	dao.insertDept(ins);
-		ArrayList<Emp> elist = dao.empList2("","");
-		System.out.println(elist.size());
    }
+
+	public Emp getEmp(int empno) {
+			Emp emp = null;
+	
+			try {
+				setCon();
+				String sql = "SELECT * FROM emp2 where empno =" + empno;
+				stmt = con.createStatement();
+	
+				rs = stmt.executeQuery(sql);
+	
+				if (rs.next()) {
+	
+					emp = new Emp(rs.getInt("empno"), rs.getString(2), rs.getString(3), rs.getInt(4),
+							rs.getDate("hiredate"), rs.getDouble(6), rs.getDouble(7), rs.getInt(8));
+	
+				}
+	
+				rs.close();
+				stmt.close();
+				con.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				System.out.println(e1.getMessage());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			return emp;
+		}
+
+	public static void main(String[] args) {
+			A01_Dao dao = new A01_Dao();
+			
+			ArrayList<Emp> elist = dao.empList2("","");
+			System.out.println(elist.size());
+	}
 }

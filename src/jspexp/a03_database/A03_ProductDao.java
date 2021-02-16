@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import jspexp.z01_vo.Dept;
 import jspexp.z01_vo.Product2;
+import jspexp.z01_vo.Product3;
 
 public class A03_ProductDao {
 
@@ -67,34 +68,33 @@ public class A03_ProductDao {
 		}
 		return plist;
 	}	
+	
 	public ArrayList<Product2> produtList(String pname, int from, int to) {
 		ArrayList<Product2> plist = new ArrayList<Product2>();
 		try {
 			setCon();
-			String sql = "";
-			if(from > 0 && to > 0) {
-				sql = "SELECT * FROM product2"
-					+ " WHERE pname LIKE '%"+pname+"%'"
-					+ " AND price BETWEEN "+from+" AND "+to;
-			} else {
-				sql = "SELECT * FROM product2"
-						+ " WHERE pname LIKE '%"+pname+"%'";
-			}
+			String sql = "SELECT * FROM product2\n"
+					+ " WHERE NAME LIKE '%'||?||'%'\n"
+					+ "AND PRICE BETWEEN ? AND ?";
 			System.out.println(sql);
-			stmt = con.createStatement();
-			rs = stmt.executeQuery(sql);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, pname);
+			pstmt.setInt(2, from);
+			pstmt.setInt(3, to);
+			
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				plist.add(new Product2(rs.getInt("pno"),
-									   rs.getString("pname"),
+									   rs.getString("name"),
 									   rs.getInt("price"),
 									   rs.getInt("cnt"),
-									   rs.getDate("regdate"),
-									   rs.getString("mfg"),
-									   rs.getDate("wrhsdate"),
-									   rs.getString("director")));
+									   rs.getDate("credte"),
+									   rs.getString("comp"),
+									   rs.getDate("incomdte"),
+									   rs.getString("inmanager")));
 			}
 			rs.close();
-			stmt.close();
+			pstmt.close();
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -104,6 +104,7 @@ public class A03_ProductDao {
 		}
 		return plist;
 	}	
+	
 	public Product2 getProduct(int pno) {
 		Product2 prod = null;
 		try {
@@ -115,13 +116,13 @@ public class A03_ProductDao {
 			rs = stmt.executeQuery(sql);
 			if(rs.next()) {
 				prod = new Product2(rs.getInt("pno"),
-									rs.getString("pname"),
+									rs.getString("name"),
 								    rs.getInt("price"),
 							  	    rs.getInt("cnt"),
-								    rs.getDate("regdate"),
-								    rs.getString("mfg"),
-								    rs.getDate("wrhsdate"),
-								    rs.getString("director"));
+								    rs.getDate("credte"),
+								    rs.getString("comp"),
+								    rs.getDate("incomdte"),
+								    rs.getString("inmanager"));
 			}
 			rs.close();
 			stmt.close();
@@ -163,7 +164,8 @@ public class A03_ProductDao {
 	}
 	
 	public static void main(String[] args) {
-//		A03_ProductDao dao = new A03_ProductDao();
-//		System.out.println(dao.getProduct(1).getPname());
+		A03_ProductDao dao = new A03_ProductDao();
+		
+		
 	}
 }

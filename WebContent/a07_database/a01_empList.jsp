@@ -15,7 +15,7 @@
 <link rel="stylesheet" 
 	href="<%=path%>/a00_com/a00_com.css">
 <style>
-
+	tr:hover{background: yellow;}
 </style>
 <script>
 	window.onload=function(){

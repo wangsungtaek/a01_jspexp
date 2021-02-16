@@ -127,9 +127,54 @@ public class A03_ShopDao {
 		return pro;
 	}
 
+	// updatae
+	public void updateProd(Product3 prod) {
+		try {
+			setCon();
+			con.setAutoCommit(false);
+			
+			String sql = "UPDATE product2\n"
+					+ "   SET  name = ?,\n"
+					+ "   	   price = ?,\n"
+					+ "   	   cnt = ?,\n"
+					+ "   	   credte = to_date(?,'YYYY-MM-DD'),\n"
+					+ "   	   comp = ?,\n"
+					+ "   	   incomdte = to_date(?,'YYYY-MM-DD'),\n"
+					+ "   	   inmanager = ?\n"
+					+ "WHERE pno = ?";
+			System.out.println(sql);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, prod.getName());
+			pstmt.setInt(2, prod.getPrice());
+			pstmt.setInt(3, prod.getCnt());
+			pstmt.setString(4, prod.getCredteS());
+			pstmt.setString(5, prod.getCompany());
+			pstmt.setString(6, prod.getIncomedteS());
+			pstmt.setString(7, prod.getInmanager());
+			pstmt.setInt(8, prod.getPno());
+			pstmt.executeUpdate();
+			System.out.println(sql);
+			con.commit();
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 	
-//	public static void main(String[] args) {
-//		A03_ShopDao dao = new A03_ShopDao();
-//
-//	}
+	public static void main(String[] args) {
+		A03_ShopDao dao = new A03_ShopDao();
+		
+		dao.updateProd(new Product3(10,"앵두",10000,5,"2021/01/02","앵두나라","2021/01/05","앵두맨"));
+	}
 }

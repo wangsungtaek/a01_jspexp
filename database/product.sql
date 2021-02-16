@@ -37,3 +37,35 @@ SELECT * FROM product2;
 
 SELECT * FROM product2
 WHERE pno = 1;
+
+SELECT * FROM product2
+ WHERE NAME LIKE '%사과%'
+AND PRICE BETWEEN 1000 AND 2000;
+/*
+SELECT * FROM product2
+ WHERE NAME LIKE '%?%'
+AND PRICE BETWEEN ? AND ?
+*/
+UPDATE product2
+   SET pno = 100,
+   	   name = 'asdf',
+   	   price = 1000,
+   	   cnt = 5,
+   	   credte = to_date('2020/11/15','YYYY/MM/DD'),
+   	   comp = '키위바구니',
+   	   incomdte = to_date('2020/11/20','YYYY/MM/DD'),
+   	   inmanager = '키위담당자'
+WHERE pno = 12;
+/*
+UPDATE product2
+   SET pno = ?,
+   	   name = ?,
+   	   price = ?,
+   	   cnt = ?,
+   	   credte = to_date('?','YYYY/MM/DD'),
+   	   comp = '키위바구니',
+   	   incomdte = to_date('?','YYYY/MM/DD'),
+   	   inmanager = ?
+WHERE pno = ?
+*/
+SELECT * FROM PRODUCT2;

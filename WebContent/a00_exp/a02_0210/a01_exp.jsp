@@ -97,7 +97,7 @@
 	String to_ = request.getParameter("priceTo");
 	String pname = "";
 	int from = 0;
-	int to = 0;
+	int to = 999999;
 	if(pname_ != null && !pname_.equals("")) pname = pname_;
 	if(from_ != null && !from_.equals("")) from = Integer.parseInt(from_);
 	if(to_ != null && !to_.equals("")) to = Integer.parseInt(to_);

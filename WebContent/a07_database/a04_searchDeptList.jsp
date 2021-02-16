@@ -18,9 +18,9 @@
 
 </style>
 <script>
-	window.onload=function(){
-      
-	};
+	function detail(no) {
+		location.href="a21_deptDetail.jsp?deptno="+no;
+	}
 </script>
 </head>
 <%--
@@ -90,17 +90,12 @@
 	<table>
 		<tr><th>부서번호</th><th>부서명</th><th>부서위치</th></tr>
 		<%for(Dept d:dlist){ %>
-		<tr onclick="detail(<%=d.getDeptno()%>">
+		<tr onclick="detail(<%=d.getDeptno() %>)">
 			<td><%=d.getDeptno() %></td>
 			<td><%=d.getDname() %></td>
 			<td><%=d.getLoc() %></td></tr>
 		<%} %>
 	</table>
 	</form>
-	<script type="text/javascript">
-	function detail(no) {
-		location.href="a21_deptDetail.jsp?deptno="+no;	
-	}
-	</script>
 </body>
 </html>

@@ -10,8 +10,10 @@ public class Product3 {
 	private int to_price;
 	private int cnt;
 	private Date credte;
+	private String credteS;
 	private String company;
 	private Date incomedte;
+	private String incomedteS;
 	private String inmanager;
 	
 	public Product3() {
@@ -28,6 +30,31 @@ public class Product3 {
 		this.credte = credte;
 		this.company = company;
 		this.incomedte = incomedte;
+		this.inmanager = inmanager;
+	}
+	
+	
+	
+	public Product3(int pno, String name, int price, int cnt, String company, String inmanager) {
+		super();
+		this.pno = pno;
+		this.name = name;
+		this.price = price;
+		this.cnt = cnt;
+		this.company = company;
+		this.inmanager = inmanager;
+	}
+
+	public Product3(int pno, String name, int price, int cnt, String credteS, String company, String incomedteS,
+			String inmanager) {
+		super();
+		this.pno = pno;
+		this.name = name;
+		this.price = price;
+		this.cnt = cnt;
+		this.credteS = credteS;
+		this.company = company;
+		this.incomedteS = incomedteS;
 		this.inmanager = inmanager;
 	}
 
@@ -116,6 +143,22 @@ public class Product3 {
 
 	public void setInmanager(String inmanager) {
 		this.inmanager = inmanager;
+	}
+
+	public String getCredteS() {
+		return credteS;
+	}
+
+	public void setCredteS(String credteS) {
+		this.credteS = credteS;
+	}
+
+	public String getIncomedteS() {
+		return incomedteS;
+	}
+
+	public void setIncomedteS(String incomedteS) {
+		this.incomedteS = incomedteS;
 	}
 	
 }
