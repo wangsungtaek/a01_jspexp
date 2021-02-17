@@ -4,6 +4,9 @@ public class Member {
 	private String id;
 	private String pass;
 	private int point;
+	public Member() {
+		// TODO Auto-generated constructor stub
+	}
 	public Member(String id, int point) {
 		super();
 		this.id = id;

@@ -183,16 +183,14 @@ public class A02_DeptDao {
 			con.setAutoCommit(false);
 			
 			String sql = "UPDATE dept2\n"
-					+ "   SET deptno = ?,\n"
-					+ "   	   dname = ?,\n"
-					+ "   	   loc = ?\n"
+					+ "   SET dname = ?,\n"
+					+ "   	  loc = ?\n"
 					+ "WHERE DEPTNO = ?";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, upd.getDeptno());
-			pstmt.setString(2, upd.getDname());
-			pstmt.setString(3, upd.getLoc());
-			pstmt.setInt(4, upd.getDeptno());
+			pstmt.setString(1, upd.getDname());
+			pstmt.setString(2, upd.getLoc());
+			pstmt.setInt(3, upd.getDeptno());
 			
 			pstmt.executeUpdate();
 			
@@ -213,6 +211,35 @@ public class A02_DeptDao {
 		}
 	}
 
+	public void deleteDept(int deptno) {
+		try {
+			setCon();
+			con.setAutoCommit(false);
+			
+			String sql = "delete dept2 where deptno = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, deptno);
+			
+			pstmt.executeUpdate();
+			
+			con.commit();
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
 	public static void main(String[] args) {
 //		A02_DeptDao dao = new A02_DeptDao();
 		

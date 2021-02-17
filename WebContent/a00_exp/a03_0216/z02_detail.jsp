@@ -20,10 +20,18 @@
 <script>
 	window.onload=function(){
 		var updateObj = document.querySelector("#update-btn");
+		var deleteObj = document.querySelector("#delete-btn");
 		updateObj.onclick = function() {
 			document.querySelector("[name=proc]").value = "update";
 			document.querySelector("form").submit();
 		}
+		deleteObj.onclick = function() {
+			if(confirm("정말 삭제하시겠습니까?")){
+				document.querySelector("[name=proc]").value = "delete";
+				document.querySelector("form").submit();
+			}
+		}
+		
 	};
 </script>
 </head>
@@ -56,11 +64,11 @@
 	
 	// db
 	A03_ShopDao dao = new A03_ShopDao();
-	if(proc != null && proc.equals("update")) {
-		log("#update : "+pno+", "+name+", "+price+", "+cnt+", "+company);
-		
+	if(proc != null && proc.equals("update"))
 		dao.updateProd(new Product3(pno,name,price,cnt,credtes,company,incomedte,inmanager));
-	}	
+	if(proc != null && proc.equals("delete"))
+		dao.delete(pno);
+	
 	Product3 pro = dao.getProd(pno);
 %>
 <script type="text/javascript">
@@ -68,6 +76,10 @@
 	if(proc == 'update')
 		if(confirm("수정완료\n조회페이지로 이동하시겠습니까"))
 			location.href='a01_exp.jsp';
+	if(proc == 'delete') {
+		alert('삭제완료');
+		location.href='a01_exp.jsp';
+	}
 </script>
 
 	<h3>상세화면</h3>

@@ -44,7 +44,7 @@
 	if(dname!=""){
 		alert("등록 성공");
 		if(confirm("등록성공\n조회페이지로이동")){
-			location.href="a03_searchDeptList.jsp";
+			location.href="a04_searchDeptList.jsp";
 		}
 	}
 </script>

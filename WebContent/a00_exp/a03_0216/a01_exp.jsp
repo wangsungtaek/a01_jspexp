@@ -81,6 +81,15 @@
 [js]
 [하] 1. 강제이벤트란 무엇인가? 개념을 설명하고, 기본예제로 기술하세요.
 	- 이벤트가 발생하지 않더라도, 코드사 이벤트가 수행된 것과 동일한 효과를 처리하는 것
+	- 실제 이벤트가 발생하지 않지만, 객체.on이벤트명();으로 js 코드로
+		이벤트가 발생했을 때, 핸들러 함수를 수행하는 것을 말한다.
+		h3Obj.onclick = function(){
+			this.innerTest="*";
+		}
+		setInterval(function(){
+			h3Obj.onclick(); // 강제 이벤트 발생 처리(1초마다)
+			
+		},1000);
 --%>
 	<button id=button-a>버튼A</button>
 	<button id=button-b>버튼B</button>
@@ -110,6 +119,15 @@
         	유효성 검사를 할 객체의조건을 확인하여
         	만족하면 return값을 true, 만족하지 못하면 fasle를 반환하여 submit을 하지 않도록 구현한다.
         
+        // 정답
+        1) 이벤트명 : submit
+        2) 유효성 처리 방법
+        	선택한form객체.onsumnit=function(){
+        		요청값으로 form하위에 있는 요소객체에 대한 유효성 check
+        		해당 값이 유효성에 문제가 있을 때, return false 처리하여
+        		전송하지 못하게 방지한다.
+        	}
+        
 [하] 3. 키 이벤트를 이용하여  h3 7개를 아래 위로 키를 입력시
    이동되어 배경색상과 글자 색상이 변경되게 처리하세요.
 --%>
@@ -133,13 +151,13 @@
 					h3Objs[i].style.backgroundColor="";
 				if(event.keyCode == 40) {
 					idx++;
-					h3Objs[idx].style.backgroundColor="yellow";
-					h3Objs[idx].style.color="pink";
 				} else if(event.keyCode == 38) {
 					idx--;
-					h3Objs[idx].style.backgroundColor="yellow";
-					h3Objs[idx].style.color="pink";
 				}
+				if(idx<0) idx = 0;
+				if(idx>6) idx = 6;
+				h3Objs[idx].style.backgroundColor="yellow";
+				h3Objs[idx].style.color="pink";
 			}
 		}	
 	</script>

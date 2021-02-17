@@ -102,3 +102,10 @@ UPDATE dept2
    	   loc = ?
 WHERE DEPTNO = ?
 */
+
+SELECT * FROM EMP2;
+DELETE EMP2 WHERE EMPNO = 7;
+SELECT * FROM DEPT2;
+DELETE dept2 WHERE deptno = 60;
+
+SELECT * FROM product2;

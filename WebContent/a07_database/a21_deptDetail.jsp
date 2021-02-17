@@ -20,19 +20,35 @@
 <script>
 	window.onload=function(){
 		var updateBtn = document.querySelector("#upt-btn");
-		
+		var deleteBtn = document.querySelector("#del-btn");
+
 		updateBtn.onclick = function(){
 			document.querySelector("[name=proc]").value = "update";
+			document.querySelector("form").submit();
+		}
+		deleteBtn.onclick = function(){
+			document.querySelector("[name=proc]").value = "delete";
 			document.querySelector("form").submit();
 		}
 	};
 </script>
 </head>
+<%--
+# 부서정보 수정 처리
+1. 이벤트로 수정 처리 클릭시, 요청값 전송
+2. 전달한 요청값 확인, VO객체로 할당.
+3. 수정 sql 작성/확인
+4. DAO에서 수정 기능메서드 선언
+5. jsp dao 수정 기능메서드 호출/vo객체 할당
+6. js로 수정처리완료 confirm 계속수정/조회화면 이동할지 선택
+	location.href="초기 리스트 페이지";
+ --%>
 <%
 
 	int deptno = 1;
 	String dname = "";
 	String loc = "";
+	
 	// request
 	String deptnoS = request.getParameter("deptno");
 	String dnameS = request.getParameter("dname");
@@ -51,23 +67,30 @@
 	
 	A02_DeptDao dao = new A02_DeptDao();
 	
-	if(proc != null)
-		if(proc.equals("update")) {
+	if(proc != null) {
+		if(proc.equals("update"))
 			dao.updateDept(new Dept(deptno, dname, loc));
-			log("success");
-		}
+		if(proc.equals("delete"))
+			dao.deleteDept(deptno);
+	}
 	
 	Dept d = dao.getDept(deptno);
 %>
 <script type="text/javascript">
 	var proc = "<%=proc %>";
-	if(proc == "update")
+	if(proc == "update") {
 		if(confirm("수정완료\n조회화면으로 이동하시겠습니까"))
 			location.href='a04_searchDeptList.jsp';
+	}
+	if(proc == "delete") {
+		alert("삭제완료");
+		location.href='a04_searchDeptList.jsp';
+	}
+	
 </script>
 <body>
 	<h3>부서정보[<%=request.getParameter("deptno") %>]</h3>
-	<form method="post">
+	<form id= "frm" method="post">
 	<input type="hidden" name="proc" value=""/>
 	<table>
 		<%if(d!=null){ %>

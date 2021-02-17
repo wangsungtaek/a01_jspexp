@@ -583,6 +583,7 @@ public class A01_Dao {   //DAO : database access object
 		}
    }
 
+   // update
    public void updateEmp(Emp upt) {
 	   
 	   try {
@@ -629,7 +630,7 @@ public class A01_Dao {   //DAO : database access object
 		}
    }
 
-	public Emp getEmp(int empno) {
+   public Emp getEmp(int empno) {
 			Emp emp = null;
 	
 			try {
@@ -657,11 +658,41 @@ public class A01_Dao {   //DAO : database access object
 			}
 			return emp;
 		}
+   // delete
+   public void deleteEmp(int emp) {
+		   
+		   try {
+			   setCon();
+			   con.setAutoCommit(false);
+			   
+			   String sql = "DELETE EMP2 WHERE EMPNO = ?";
+			   
+			   pstmt = con.prepareStatement(sql);
+			   pstmt.setInt(1, emp);
+			   
+			   pstmt.executeUpdate();
+			   
+			   con.commit();
+			   
+			   pstmt.close();
+			   con.close();
+			   
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("db 처리 에리");
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			} catch (Exception e) {
+				System.out.println("일반에러");
+			}
+	   }
 
-	public static void main(String[] args) {
-			A01_Dao dao = new A01_Dao();
+   public static void main(String[] args) {
+		A01_Dao dao = new A01_Dao();
 			
-			ArrayList<Emp> elist = dao.empList2("","");
-			System.out.println(elist.size());
+		dao.deleteEmp(7369);
 	}
 }
