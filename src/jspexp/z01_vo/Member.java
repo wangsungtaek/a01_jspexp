@@ -4,8 +4,19 @@ public class Member {
 	private String id;
 	private String pass;
 	private int point;
+	private String name;
+	private String auth;
+
 	public Member() {
 		// TODO Auto-generated constructor stub
+	}
+	public Member(String id, String pass, int point, String name, String auth) {
+		super();
+		this.id = id;
+		this.pass = pass;
+		this.point = point;
+		this.name = name;
+		this.auth = auth;
 	}
 	public Member(String id, int point) {
 		super();
@@ -36,5 +47,16 @@ public class Member {
 	public void setPoint(int point) {
 		this.point = point;
 	}
-	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getAuth() {
+		return auth;
+	}
+	public void setAuth(String auth) {
+		this.auth = auth;
+	}
 }
