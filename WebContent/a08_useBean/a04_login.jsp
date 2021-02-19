@@ -46,6 +46,12 @@
 	</table>
 	</form>
 	<jsp:useBean id="m" class="jspexp.z01_vo.Member" scope="session"/>
+	<%--
+	# useBean을 활용하면 setProperty를 통해서 request.getParameter("요청키")
+	와 VO객체에 요청값을 할당하는 처리까지 해주고, session scope를 이용하여
+	해당 bean이 저장되는 단위까지 처리할 수 있다.
+	
+	 --%>
 	<jsp:setProperty property="*" name="m"/>
 	<%
 	boolean isLogFail = false;
@@ -53,13 +59,16 @@
 		log("##로그인한 id "+m.getId());
 		A04_MemberDao dao = new A04_MemberDao();
 		Member m1 = dao.login(m);
-		
-		m.setAuth(m1.getAuth());
-		m.setName(m1.getName());
-		m.setPoint(m1.getPoint());
+
 		if(m1==null){
 			isLogFail = true;
 		} else {
+			// session Bean에 데이터를 저장 처리..
+			// DB에서 불러온 데이터를 하나씩 속성으로 session bean에 할당 처리..
+			m.setAuth(m1.getAuth());
+			m.setName(m1.getName());
+			m.setPoint(m1.getPoint());
+			// 데이터가 있을 때 처리.
 			response.sendRedirect("a05_success.jsp");
 		}
 	}
@@ -67,7 +76,7 @@
 	<script type="text/javascript">
 	var isLogFail = <%=isLogFail%>;
 	if(isLogFail){
-		alert("인증되지 않는 계정입니다.");
+		alert("인증되지 않는 계정입니다.\n 다시 로그인 하세요.");
 		$("[name=id]").focus();
 	}
 	</script>

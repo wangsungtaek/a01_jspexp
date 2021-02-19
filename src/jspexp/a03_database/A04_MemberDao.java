@@ -70,8 +70,8 @@ public class A04_MemberDao {
 	}
 	
 	// 등록확인
-	public boolean checkMamber(String id) {
-		boolean isMember = false;
+	public boolean hasMember(String id) {
+		boolean hasMem = false;
 		try {
 			setCon();
 			
@@ -82,8 +82,9 @@ public class A04_MemberDao {
 			pstmt.setString(1,id);
 			rs = pstmt.executeQuery();
 			
-			isMember = rs.next();
+			hasMem = rs.next();
 			
+			rs.close();
 			pstmt.close();
 			con.close();
 		} catch (SQLException e) {
@@ -93,8 +94,9 @@ public class A04_MemberDao {
 			System.out.println("일반 에러:"+e.getMessage());
 		}
 		
-		return isMember;
+		return hasMem;
 	}
+		
 	
 	public static void main(String[] args) {
 //		A04_MemberDao dao = new A04_MemberDao();

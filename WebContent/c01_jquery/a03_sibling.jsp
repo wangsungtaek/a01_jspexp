@@ -32,7 +32,7 @@ $("[속성$=속성값]") : 해당 속성에 속성값으로 끝나는 모든 요
 	$(document).ready(function(){
 		$("h3").text("형제관계");
 		$("#prev ~ div").css("border", "3px groove blue");
-		$("[id]").css("font-size","30px");
+		$("[id]").css("font-size","50px");
 		$("a[href='http://naver.com']").css("font-size", "40px");
 		$("a[href!='http://naver.com']").css("color","red");
 		$("a[href^='https']").css("background-color","pink");
@@ -54,6 +54,5 @@ $("[속성$=속성값]") : 해당 속성에 속성값으로 끝나는 모든 요
 	<div>div 아이템3<div id="small">중첩 div아이템 1</div></div>
 	<span>span 아이템 2</span>
 	<div>div 아이템4</div>
-	<input id="id" type="text">
 </body>
 </html>

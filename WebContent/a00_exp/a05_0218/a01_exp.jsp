@@ -41,7 +41,7 @@
 		</tr>
 	</table>
 	</form>
-	<jsp:useBean id="user" class="jspexp.z01_vo.Member" scope="page"/>
+	<jsp:useBean id="user" class="jspexp.z01_vo.Member" scope="request"/>
 	<jsp:setProperty property="*" name="user"/>
 	<%
 	boolean isMember = false;
@@ -55,9 +55,13 @@
 		var isMember = <%=isMember %>;
 		console.log(typeof(id));
 		console.log(id);
-		if(id != "null" && id){
+		console.log(isMember);
+		if(id != "null" ){
 			console.log(id);
-			if(isMember) alert("등록된 회원입니다.");
+			console.log(isMember);
+			if(isMember) { 
+				alert("등록된 회원입니다.");
+			}
 			else alert("회원등록 가능합니다.");
 		}
 	</script>

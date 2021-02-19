@@ -21,11 +21,23 @@
 	$(document).ready(function(){
 		$("h3").text("로그인 성공");
 	});
+	function logout(){
+		location.href="a05_success.jsp?logout=y";
+	}
 </script>
 </head>
+<%
+	String logout=request.getParameter("logout");
+	if(logout != null && logout.equals("y")){
+		// session bean으로 m으로 된 것만 null session bean을 삭제 처리..
+		session.setAttribute("m", null);
+		response.sendRedirect("a04_login.jsp");
+	}
+%>
 <body>
 	<jsp:useBean id="m" class="jspexp.z01_vo.Member" scope="session"/>
-	<h3>제목</h3>
+	<input type="button" value="로그아웃" onclick="logout()"/>
+	<h3	>제목</h3>
 	<table>
 		<tr><th>아이디</th><td><%=m.getId() %></td></tr>
 		<tr><th>이름</th><td><%=m.getName() %></td></tr>

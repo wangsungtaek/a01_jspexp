@@ -9,12 +9,34 @@ public class Book {
 	private String bname;
 	private int price;
 	private String author;
+	private String publisher;
+	
+	public Book() {
+		
+	}
+	
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+
 	public Book(String bname, int price, String author) {
 		super();
 		this.bname = bname;
 		this.price = price;
 		this.author = author;
 	}
+	public Book(String bname, int price, String author, String publisher) {
+		super();
+		this.bname = bname;
+		this.price = price;
+		this.author = author;
+		this.publisher = publisher;
+	}
+
 	public String getBname() {
 		return bname;
 	}

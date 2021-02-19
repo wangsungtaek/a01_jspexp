@@ -1,4 +1,5 @@
 package jspexp.z01_vo;
+
 public class Person {
 	
 	private String name;

@@ -18,22 +18,14 @@
 </style>
 <script type="text/javascript" src="<%=path%>/a00_com/jquery-3.5.1.js"></script>
 <script>
-/*
-# $("요소객체[속성]") 관련 내용.
-1. $("요소객체[속성*=속성값]") : 해당요소객체에 속성에 속성값이 포함되어 있는 경우
-2. $("요소객체[속성~=속성값]") : 해당요소객체에 속성에 속성값이 단어(띄어쓰기로 해당 단어 구분)로 포함되어 있는 경우
- */
 	$(document).ready(function(){
-		$("input[name*='man']").val("man 글자 포함");
-		$("input[name~='man']").css("border", "3px solid red");
+// 		$("h3").text("시작");
 	});
 </script>
 </head>
 <body>
-	<input name="man-news">
-	<input name="milk man">
-	<input name="letterman2">
-	<input name="newmilk">
-	<input name="superman">
+<h3>${bk.bname}</h3>
+<h3>${bk.author}</h3>
+<h3>${bk.publisher}</h3>
 </body>
 </html>
