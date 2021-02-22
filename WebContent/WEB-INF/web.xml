@@ -51,7 +51,7 @@
   	서버단위 에러처리.
   	1. code/class 단위  	
   	2. location : WebContent를 기준 folder로 하위에 설정할 수 있다.
-  	-->
+  
 	<error-page>
 		<error-code>404</error-code>
 		<location>/a04_exception/z03_404.jsp</location>
@@ -60,11 +60,9 @@
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/a04_exception/z04_all_exception.jsp</location>
 	</error-page>
-
-
 	<error-page>
 		<exception-type>java.lang.NullPointException</exception-type>
 		<location>/a04_exception/z05_null_exption.jsp</location>
 	</error-page>
-
+	-->
 </web-app>

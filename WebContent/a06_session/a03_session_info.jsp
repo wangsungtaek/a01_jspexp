@@ -6,7 +6,7 @@
     %>
 <%request.setCharacterEncoding("UTF-8");
 String path = request.getContextPath();
-Date time=new Date();	//java Date객체 생성.
+Date time = new Date();	//java Date객체 생성.
 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 %>
 

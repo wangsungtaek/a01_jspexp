@@ -51,7 +51,7 @@ ORDER BY job;
 	log("## 요청값:"+avgsal);
 	
 	A01_Dao dao = new A01_Dao();
-	ArrayList<JobSalary> sal = dao.jobSalList(avgsal);
+	ArrayList<JobSalary> sal = dao.jobSalList(avg);
 %>
 <body>
 	<h3>제목</h3>

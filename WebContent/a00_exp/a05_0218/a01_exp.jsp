@@ -47,7 +47,7 @@
 	boolean isMember = false;
 	if(user.getId() != null) {
 		A04_MemberDao dao = new A04_MemberDao();
-		isMember = dao.checkMamber(user.getId());
+// 		isMember = dao.checkMamber(user.getId());
 	}
 	%>
 	<script type="text/javascript">

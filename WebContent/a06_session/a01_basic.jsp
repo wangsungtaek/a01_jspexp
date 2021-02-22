@@ -54,7 +54,7 @@ String path = request.getContextPath();
 	session.setAttribute("name","홍길동");
 //	2) 객체설정.
 	session.setAttribute("p01",new Product("사과",3000,2));
-//		설정된 객체 가져오기
+//	설정된 객체 가져오기
 	Product p = (Product)session.getAttribute("p01");
 //	ex1) Person 객체설정하고, 하단에 Person객체의 속성 가져오기.
 	session.setAttribute("p",new Person("홍길동",29,"경기도수원"));

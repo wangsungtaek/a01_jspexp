@@ -24,6 +24,8 @@
 </script>
 </head>
 <body>
+	<%-- use Bean을 통해서 session범위로 저장되어 있는 내용은
+		el을 이용해서 바로 호출하여 사용할 수 있다. ${bean아이디.속성} --%>
 <h3>${bk.bname}</h3>
 <h3>${bk.author}</h3>
 <h3>${bk.publisher}</h3>
