@@ -96,11 +96,51 @@ public class A04_MemberDao {
 		
 		return hasMem;
 	}
+
+	// 멤버확인
+	public ArrayList<Member> memberList(String name, String id) {
+		ArrayList<Member> list = new ArrayList<Member>();
+		try {
+			setCon();
+			
+			String sql = "	SELECT * from MEMBER5\n"
+					+ "	WHERE name like '%'|| ? ||'%'\n"
+					+ "	AND id LIKE '%'|| ? ||'%'\n"
+					+ "	ORDER BY regdte desc";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1,name);
+			pstmt.setString(2,id);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new Member(rs.getString("id"),
+									rs.getString("pass"),
+									rs.getInt("point"),
+									rs.getString("name"),
+									rs.getString("auth")));
+			}
+			
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("DB 에러:"+e.getMessage());
+		} catch (Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}
 		
+		return list;
+	}
+
+	
 	
 	public static void main(String[] args) {
-//		A04_MemberDao dao = new A04_MemberDao();
+		A04_MemberDao dao = new A04_MemberDao();
 		
-//		System.out.println(dao.checkMamber("hima"));
+		ArrayList<Member> list = dao.memberList("", "");
+		for(Member m : list)
+			System.out.println(m.getName());
 	}
 }

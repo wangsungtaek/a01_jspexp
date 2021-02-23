@@ -25,7 +25,15 @@
 1. 기본 형식
 	<c:forEach var="cnt" begin="시작변수" end="마지막변수"
 		stop="증감단위">
+		<h2>${cnt}</h2>
+	</c:forEach>
+	for문과 비교
+	<%for(int cnt=시작변수; cnt<=마지막변수; cnt++(증감단위) { %>
+		<h2><%=cnt%></h2>
+	<%} %>
 2. 기타 옵션
+	<c:forEach var="cnt" varStatus="sts">
+		<h2>${sts.index}
 	1) varStatue = "sts"
 		${sts.index} : 반복문에서 0부터 시작하는 index를 출력
 		${sts.count} : 반복문에서 1부터 시작하는 카운트 출력
@@ -55,6 +63,18 @@
 		</c:forEach>
 		</tr>
 	</c:forEach>
+	</table>
+	
+	<table>
+		<c:forEach var="cnt" begin="1" end="16">
+			<c:if test="${cnt%4 == 1}">
+			<tr>
+			</c:if>	
+				<td>${cnt}</td>
+			<c:if test="${cnt%4 == 0}">
+			</tr>
+			</c:if>
+		</c:forEach>
 	</table>
 </body>
 </html>

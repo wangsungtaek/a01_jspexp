@@ -34,9 +34,10 @@
    ${paramValues.요청배열key} == request.getParameterValues("요청배열key)
 
  --%>
+
 <body>
 	<h3>제목</h3>
-	<form method="post">
+	<form method="get">
 	<table>
 		<tr><th>아이디</th><td><input type="text" name="id"/></td></tr>
 		<tr><th>오늘의 점심</th>
@@ -98,5 +99,22 @@
 		${paramValues.hobby[2]}
 		${paramValues.hobby[3]}
 	</h4>
+	<form method="get">
+		<input type="checkbox" name="testBox" value="java"/>자바
+		<input type="checkbox" name="testBox" value="javaScript"/>자바스크립트
+		<input type="checkbox" name="testBox" value="파이썬"/>파이썬
+		<input type="checkbox" name="testBox" value="HTML"/>HTML
+		<input type="checkbox" name="testBox" value="CSS"/>CSS
+		<input type="checkbox" name="testBox" value="C++"/>C++
+		<button>전송</button>
+	</form>
+	${paramValues.testBox[0]}
+	${paramValues.testBox[1]}
+	${paramValues.testBox[2]}
+	${paramValues.testBox[3]}
+	${paramValues.testBox[4]}
+	${paramValues.testBox[5]}
+	
+	
 </body>
 </html>

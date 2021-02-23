@@ -119,3 +119,9 @@ SELECT * FROM MEMBER5 m ;
 SELECT *
 FROM MEMBER5;
 
+SELECT * from MEMBER5
+WHERE name like '%'||upper(?)||'%'
+AND id LIKE '%'||upper(?)||'%'
+ORDER BY regdte desc;
+
+

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="/jspexp/a00_com/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+/* 
+ 
+ 
+*/
+//
+	$(document).ready(function(){
+// 		ex) z01_data02.html == 인사말 메시지
+//		a02_callSyn.html로 동기식으로 클릭시 화면출력..
+		$('h2').click(function(){
+			var xhr = new XMLHttpRequest();
+			xhr.open("get","z01_data02.html",false);
+			xhr.send();
+			alert(xhr.responseText);
+			$('div').html(xhr.responseText);
+		});
+	});
+</script>
+</head>
+<body>
+	<h2>click</h2>
+	<div></div>
+</body>
+</html>

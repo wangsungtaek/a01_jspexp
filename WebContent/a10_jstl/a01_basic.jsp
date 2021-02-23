@@ -44,8 +44,18 @@
 			request.setAttribute("p", new Persion("홍길동",25"서울신림동");
 			%>
 			<c:set var = "p01" value="${p}"/>
+			
+			# property : 객체의 속성의 접근하는 메서드를 사용하는 것을 말한다.
+				그런데, set/get을 제외하고 모두 소문자로 변경하여 활용한다.
+				public void setName(String name) {} 메서드가 있고,
+				이 객체의 property name을 호출한다는 것은 위 기능 메서드를
+				호출해서 처리한다는 것이다. setName ==> Name ==> name
+				최종 name이 property를 의미한다.
+				el나 jstl에서 호출할 때, 필드명과 동일하기에 필드로 오인하는 경우가
+				많은데, 필드는 private 접근제어자가 붙어 있어 접근하지 못 한다.
+			
 	2) 객체의 값의 변경.
-		<c:set target="객체명"
+		<c:set target="객체명(bean의 id, session scope의 변수명, c:set의 var=변수명)"
 			property="프로퍼티이름/set메서드명" value="할당할값"/>
 		${객체명.프로퍼티명}
 		ex) <c:set taget="p01" property="name" value="마길동"/>
@@ -55,10 +65,17 @@
 		${객체명.프로퍼티명}
 	3) 조건문 처리.
 		- 단일조건문
-		<c:if test='boolean'>
+		<c:if test='${el의 변수를 비교/조건 연삭식}'>
 			boolean이 true일 때, 수행할 내용..
 		</c:if>
-		
+		- 다중조건문
+		<c:choose>
+			<c:when test="조건1인경우">조건1이 true일때, </c:when>
+			<c:when test="조건1인경우">조건2이 true일때, </c:when>
+			<c:when test="조건1인경우">조건3이 true일때, </c:when>
+			<c:otherwise>위에 조건을 제외한 나머지..</c:otherwise>			
+		</c:choose>
+		% 주의 - when text구문은 앞에 조건을 제외한 내용이다.
  --%>
 	$(document).ready(function(){
 	});
@@ -66,6 +83,26 @@
 </head>
 <body>
 	<c:set var = "name" value="홍길동" scope="request"/>
+	<%--
+	# 객체 설정하는 3가지 형식..
+	1. pageContext/request/session/application
+	 --%>
+	<%
+	pageContext.setAttribute("m01", new Member());
+	%>
+	<c:set target="${m01}" property="id" value="goodman" />
+	아이디:${m01.id}
+	<%--
+	2. <c:set var="변수명" value="<%=new 객체명()%>"/>
+	 --%>
+	<c:set var="m02" value="<%=new Member() %>"/>
+	<c:set target="${m02}" property="id" value="higirl"/>
+	아이디:${m02.id}
+	<%--
+	3. <jsp:useBean..
+	 --%>
+	
+	
 	<jsp:useBean id="mem" class="jspexp.z01_vo.Member"/>
 	<%-- property 형식으로 변경 --%>
 	<c:set target="${mem }" property="id" value="himan"/>
@@ -92,6 +129,10 @@
 	 --%>
 	<jsp:useBean id="pro" class="jspexp.z01_vo.Product"/>
 	<c:set target="${pro}" property="name" value="사과"/>
+	<%--
+	Procuct pro = new Product();
+	pro.setName("사과");
+	 --%>
 	<c:set target="${pro}" property="price" value="3000"/>
 	<c:set target="${pro}" property="cnt" value="2"/>
 	<table>
@@ -127,21 +168,24 @@
 	 --%>
 	<form>
 	<table>
+		<tr><th>물건명</th><td><input type="text" name="pname01"/></td></tr>
 		<tr><th>구매가격</th><td><input type="text" name="price01"/></td></tr>
 		<tr><th>구매갯수</th><td><input type="text" name="cnt01"/></td></tr>
 		<tr><td colspan="2">
 			<input type="submit" value="구매"/></td></tr>
 	</table>
 	</form>
-	<c:set var="total" value="${param.price01 * param.cnt01}"/>
-	<h3>구매가격 : ${param.price01 * param.cnt01}원<br>
-	할인률 : 
-	<c:choose>
-		<c:when test="${(total) >= 10000}">10% => ${total*0.1} <br> 결과 :${total-(total*0.1)} </c:when>
-		<c:when test="${(total) >= 5000}">5% => ${total*0.05} <br> 결과 :${total-(total*0.05)} </c:when>
-		<c:otherwise>3% => ${total*0.03} <br> 결과 :${total-(total*0.03)} </c:otherwise>
-	</c:choose>원
-	</h3>
+	<c:if test="${not empty param.pname}"> <!-- 입력한 물건명이 있을 때. -->
+		<c:set var="total" value="${param.price01 * param.cnt01}"/>
+		<h3>구매가격 : ${param.price01 * param.cnt01}원<br>
+		할인률 : 
+		<c:choose>
+			<c:when test="${(total) >= 10000}">10% => ${total*0.1} <br> 결과 :${total-(total*0.1)} </c:when>
+			<c:when test="${(total) >= 5000}">5% => ${total*0.05} <br> 결과 :${total-(total*0.05)} </c:when>
+			<c:otherwise>3% => ${total*0.03} <br> 결과 :${total-(total*0.03)} </c:otherwise>
+		</c:choose>원
+		</h3>
+	</c:if>
 	<%--
 	위 내용을 form객체에 의해 요청값으로 받아서 처리하세요.
 	 --%>

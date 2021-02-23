@@ -35,6 +35,19 @@ public class A03_ShopDao {
 	}
 
 	// 조회 메서드
+	public ArrayList<Product3> shopList(){
+		Product3 pro = new Product3("", 0, 99999);
+		return shopList(pro);
+	}
+	
+	public ArrayList<Product3> shopList(String pname, String fr, String to){
+		if(pname == null || pname.equals("")) pname = "";
+		if(fr == null || fr.equals("")) fr = "0";
+		if(to == null || to.equals("")) to = "99999";
+		
+		Product3 pro = new Product3(pname, Integer.parseInt(fr), Integer.parseInt(to));
+		return shopList(pro);
+	}
 	public ArrayList<Product3> shopList(Product3 sch) {
 		ArrayList<Product3> plist = new ArrayList<Product3>();
 		try {

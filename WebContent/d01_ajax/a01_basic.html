@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="/jspexp/a00_com/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+/* 
+# ajax(asynchronized javascript) 비동기 자바스크립트 통신 방식
+1. 화면에 js의 이벤트를 통해서, XMLHttpRequest객체를 생성하고,
+XMLHttpRequest객체가 화면 전환없이 요청값을 통해서 서버에 특정한 데이터를
+받아서 다시 html 화면에 처리해주는 방식을 말한다.
+
+*/
+//
+	$(document).ready(function(){
+		$("h2").text("ajax처리");
+		// 1. xmlhttpRequest객체를 통해서 화면전환없이 동기통신터리..
+		$("h2").click(function(){
+			alert("1. 이벤트 처리");
+			var xhr = new XMLHttpRequest();
+			alert("2. XMLHttpRequest 객체 생성 호출 :" + xhr);
+		// 2. 서버에 있는 특정 페이지를 client에 가져오기..
+		// xhr.open("get/post","서버에 있는 파일", 비동기여부)
+		//	xhr.open("get","z01_data01.html",false); // 동기방식으로 호출
+			xhr.open("get","z03_data03.text",false); // 동기방식으로 호출
+		// 3. 호출
+			xhr.send();
+		// 4. 서버에서 해당 결과값 받음
+			alert(xhr.responseText); // 문자열로 결과를 받음.
+		// 5. 받은 결과를 현재 화면 특정 요소객체에 출력한다.
+			$('div').html(xhr.responseText)	;
+
+		});
+	});
+</script>
+</head>
+<body>
+	<h2></h2>
+	<div></div>
+</body>
+</html>

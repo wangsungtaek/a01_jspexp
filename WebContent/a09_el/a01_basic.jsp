@@ -63,7 +63,6 @@
 		${변수==변수?"true일때":"false일때"}
 --%>
 	$(document).ready(function(){
-// 		$("h3").text("시작");
 	});
 </script>
 </head>
@@ -79,8 +78,11 @@ request.setAttribute("favor_price", 2000);
 // ex2) session scope 범위로 Member객체의 id pass name auth를 할당하고,
 //		el로 호출 하고, 다음 페이지 이동하여 해당 내용을 확인하세요.
 session.setAttribute("mem", new Member("himannn","1234","홍길동","admin"));
+pageContext.setAttribute("num01", 10);
+pageContext.setAttribute("num02", 20);
 %>
 <body>
+	${num01 < num02}
 	<h2>${name} - ${price} - ${cnt} - ${price*cnt}</h2>
 	<h3>이름 : ${p01.name}</h3>
 	<h3>나이 : ${p01.age}</h3>
