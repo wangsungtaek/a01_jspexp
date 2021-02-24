@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="/jspexp/a00_com/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+
+	var xhr = new XMLHttpRequest();
+	$(document).ready(function(){
+		$("[name=id], [name=name]").keyup(function(){
+			if(event.key == 'Enter')
+				ajaxFun();
+		});
+		$("[name=idCheck]").keyup(function(){
+			if(event.key == 'Enter')
+				ajaxFun1();
+		});
+	});
+	function ajaxFun() {
+		var idV = $("[name=id]").val();
+		var nameV = $("[name=name]").val();
+		var qstr = "id="+idV+"&name="+nameV+"&action=t";
+		xhr.open("get","z10_memberList.jsp?"+qstr, true);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				$("div").eq(0).html(xhr.responseText);
+			}
+		};
+		xhr.send();
+	}
+	function ajaxFun1() {
+		var idV = $("[name=idCheck]").val();
+		xhr.open("get","z10_memberList.jsp?idCheck="+idV+"&action=f", true);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				$("div").eq(1).html(xhr.responseText);
+			}
+		};
+		xhr.send();
+	}
+</script>
+</head>
+<body>
+	id : <input type="text" name="id"/>
+	name : <input type="text" name="name"/>
+	<div></div>
+	
+	등록여부확인 : <input type="text" name="idCheck"/>
+	<div></div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="/jspexp/a00_com/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+//ex) 물건명 : [] 가격: [] 갯수: [] [구매] a08_request.html
+//		@@@물건 구매비용 @@@원. z08_data.jsp
+	$(document).ready(function(){
+		$("[type=button]").click(function(){
+			ajaxFun();
+		});
+	});
+	function ajaxFun() {
+		var xhr = new XMLHttpRequest();
+		var nameVal = $('#name').val();
+		var priceVal = $('#price').val();
+		var cntVal = $('#cnt').val();
+		xhr.open("get","z08_data.jsp?name="+nameVal+
+									"&price="+priceVal+
+									"&cnt="+cntVal,true);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				$("div").html(xhr.responseText);
+			}
+		};
+		xhr.send();
+	}
+</script>
+</head>
+<body>
+	<table>
+		<tr><th>물건명</th><td><input type="text" id="name" name="name"/></td></tr>
+		<tr><th>가격</th><td><input type="text" id="price" name="price"/></td></tr>
+		<tr><th>갯수</th><td><input type="text" id="cnt" name="cnt"/></td></tr>
+		<tr><td colspan="2"><input type="button" value="구매" /></td>
+	</table>
+	<div></div>
+</body>
+</html>
+	

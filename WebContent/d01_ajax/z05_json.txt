@@ -1,0 +1,6 @@
+{
+	"name":"홍길동",
+	"age":25,
+	"loc":"서울신린동",
+	"isMarried":false
+}
