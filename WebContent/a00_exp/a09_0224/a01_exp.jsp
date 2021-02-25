@@ -80,29 +80,64 @@
     list된 화면에 중앙 위치에 div 창이 show(), hide()를 통해서 상세내용을 ajax를 통해서
     출력하세요. dao의 Emp getEmp(int empno)메서드 활용
 --%>		
+		$("#eDetail").hide();
 		$("[name=ename], [name=job]").keyup(function(){
 			if(event.key == 'Enter'){
 				var enameV = $('[name=ename]').val();
 				var jobV = $('[name=job]').val();
 				var str = 'ename='+enameV+'&job='+jobV;
-				xhr.open("get","z02_empData.jsp?"+str, true);
+				xhr.open("get","z02_empList.jsp?"+str, true);
 				xhr.onreadystatechange = function(){
 					if(xhr.readyState == 4 && xhr.status == 200){
-						$('div').eq(1).html(xhr.responseText);
-						console.log(xhr.responseText);
+						$('div#emp').html(xhr.responseText);
 					}
 				}
 				xhr.send();
 			}
 		});
 	});
+/*
+# 상세화면 popup 처리
+1. 로딩되는 div 설정
+	1) css로 절대 위치 지정, 크기
+	2) 초기 화면은 해당 div를 .hide()(jquery에서 보이지 않게 처리)
+2. 리스트 화면에서 클릭시
+	1) empno값 전달
+	2) 로딩 div 보이게 처리 .show()
+	3) ajax로 empno의 값으로 처리된 상세화면 jsp 구현
+	4) ajax로 해당 화면 호출..
+	5) 기타 창닫기 처리 .close();
+	
+	
+ */
+	function detailEmp(empno) {
+		$('#eDetail').show();
+		ajaxFun3(empno);
+	}
+	function closeEmp(){
+		$('#eDetail').hide();
+	}
+	function ajaxFun3(empno) {
+		xhr.open("get","z03_empDetail.jsp?empno="+empno, true);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				
+				var bottom="<br><input type='button' value='창닫기' onclick='closeEmp()' />"
+				$('#eDetail').html(xhr.responseText+bottom);
+			}
+		}
+		xhr.send();
+	}
 </script>
 	<h3>사원정보 ajax</h3>
 	<table>
 		<tr><th>사원명</th><td><input type="text" name="ename"/></td></tr>
 		<tr><th>직책명</th><td><input type="text" name="job"/></td></tr>
 	</table>
-	<div></div>
-	<div></div>
+	<div id="emp"></div>
+	<div id="eDetail"
+		style="position: absolute; left: 30%; TOP: 0%; WIDTH:40%; height: 30%;
+		background: yellow;" >
+	</div>
 </body>
 </html>
