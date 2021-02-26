@@ -14,7 +14,6 @@ import jspexp.z01_vo.Emp5;
 import jspexp.z01_vo.Member5;
 import jspexp.z01_vo.JobSalary;
 
-
 public class A01_Dao {   //DAO : database access object
    // 1. 데이터베이스 연결 처리
    private Connection con;

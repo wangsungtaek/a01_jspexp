@@ -124,4 +124,15 @@ WHERE name like '%'||upper(?)||'%'
 AND id LIKE '%'||upper(?)||'%'
 ORDER BY regdte desc;
 
+SELECT * FROM PRODUCT2 ;
 
+--사원테이블의 부서별 최근입사일과 평균 연봉을 화면에 출력하되
+--        - 입사일은 yyyy/MM/dd 형식, 연봉은 소숫점 2자리까지 표현하세요.
+
+SELECT * FROM emp2;
+SELECT deptno,
+	   MAX(hiredate) hiredate, 
+	   ROUND(avg(sal)) sal
+  FROM emp2
+ GROUP BY deptno
+ ORDER BY deptno;
