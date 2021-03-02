@@ -48,6 +48,7 @@ public class A03_ShopDao {
 		Product3 pro = new Product3(pname, Integer.parseInt(fr), Integer.parseInt(to));
 		return shopList(pro);
 	}
+
 	public ArrayList<Product3> shopList(Product3 sch) {
 		ArrayList<Product3> plist = new ArrayList<Product3>();
 		try {

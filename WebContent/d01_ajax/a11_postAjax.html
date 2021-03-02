@@ -7,8 +7,12 @@
 <script type="text/javascript">
 /* 
 # 요청값을 post방식으로 처리.
-1. 요청 페이지와 요청값 호출을 분리 처리.
-	서버단에 파일을 전송시에 활용된다.
+1. 요청 페이지와 요청값 호출을 분리 처리하고, 서버단에 파일을 전송시에 활용된다.
+	cf) get/post방식의 차이
+	외부에서는 url 주소에 요청값이 들어가면, get방식,
+	url주소에는 페이지만 표시되고, 요청 body안에서 query String으로
+	요청값을 처리하면 post방식이다.
+	- 보안적인 필요와, 요청값의 데이터가 많을 때 여부에 따라서 구분하여 처리된다.
 2. 추가 속성.
 	open("post", "주소", true);
 	sendRequestHeader("Content-Type", "application/x-www-form-urlencoded")
@@ -76,7 +80,15 @@
 		}
 		xhr.send(qstr);
 	}
-	
+/*
+# ajax의 최종 정리
+1. 동기/비동기에 따른 처리
+2. 화면 처리 방식에 데이터와 함께 전체 dom요소객체와 화면을 가져오느냐?
+	json데이터만 가져와서 js로 dom을 만들어 가느냐의 차이?
+3. get/post 방식의 차이
+		
+
+*/
 </script>
 </head>
 <body>

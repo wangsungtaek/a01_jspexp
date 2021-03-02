@@ -35,6 +35,7 @@
 	3) 기본형식
 		<fmt:formatDate type="date|time|both"
 			dateStyle = "full|short"
+			timeStyle = "full|short"
 			pattern = "yyyy/MM/dd kk:mm:ss.S"
 			value = "선언된 데이터"/>
 4. 숫자 처리
