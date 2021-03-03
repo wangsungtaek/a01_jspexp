@@ -25,9 +25,19 @@
  
 --%>
 //
-   $(document).ready(function(){
-      
-   });
+	$(document).ready(function(){
+		$('#regBtn').on("click",function(){
+			// location.href="${path}/empInsert.do";
+			$(location).attr("href","${path}/empInsert.do");
+		});
+		$('.data').on("dblclick",function(){
+			// $(this) : 클릭한 class data를 지정
+			// .children() : 바로 밑 하위 td들을 지정.
+			// eq(0) : tr하위 td의 첫번째
+			var empno = $(this).children().eq(0).text();
+			location.href="${path}/empDetail.do?empno="+empno;
+		});
+	});
 </script>
 </head>
 <body>
@@ -38,7 +48,7 @@
 		<tr><th>직책명</th><td><input type="text" name="job" value="${param.job}"/></td></tr>
 		<tr>
 			<td colspan="2"><input type="submit" value="검색"/>
-			<input type="button" value="등록"/></td>
+			<input type="button" value="등록" id="regBtn"/></td>
 		</tr>
 	</table>
 	
@@ -52,7 +62,7 @@
 			<th>부서번호</th>
 		</tr>
 		<c:forEach var="emp" items="${empList}">
-		<tr> 
+		<tr class="data"> 
 			<td>${emp.empno}</td>
 			<td>${emp.ename}</td>
 			<td>${emp.job}</td>

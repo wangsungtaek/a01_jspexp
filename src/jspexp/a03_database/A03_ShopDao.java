@@ -55,7 +55,6 @@ public class A03_ShopDao {
 			setCon();
 			String sql = "SELECT * FROM PRODUCT2 WHERE name LIKE '%'||'"+sch.getName()+"'||'%'\n"
 					+ "   AND price BETWEEN "+sch.getFr_price()+" AND "+sch.getTo_price()+" ORDER BY pno desc";
-			System.out.println(sql);
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -115,7 +114,6 @@ public class A03_ShopDao {
 		try {
 			setCon();
 			String sql = "SELECT * FROM PRODUCT2 WHERE PNO = "+prono;
-			System.out.println(sql);
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
 			if (rs.next()) {

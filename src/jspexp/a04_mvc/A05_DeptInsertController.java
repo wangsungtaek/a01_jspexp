@@ -10,18 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jspexp.a03_database.A01_Dao;
+import jspexp.a03_database.A02_DeptDao;
+import jspexp.z01_vo.Dept;
+import jspexp.z01_vo.Emp;
 
 /**
- * Servlet implementation class A04_EmpController
+ * Servlet implementation class A05_DeptInsertController
  */
-@WebServlet(name = "emp.do", urlPatterns = { "/emp.do" })
-public class A04_EmpController extends HttpServlet {
+@WebServlet(name = "deptInsert.do", urlPatterns = { "/deptInsert.do" })
+public class A05_DeptInsertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public A04_EmpController() {
+    public A05_DeptInsertController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,28 +34,23 @@ public class A04_EmpController extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// # MVC를 통한 EMP 조회 처리.
-		// 1. 요청
-		//	1) 한글에 대한 encoding
+		// 1. 요청값
 		request.setCharacterEncoding("utf-8");
-		String ename = request.getParameter("ename");
-		String job = request.getParameter("job");
-		System.out.println("## 이름:"+ename);
-		System.out.println("## 직책:"+job);
+		String deptno = request.getParameter("deptno"); if(deptno == null) deptno=""; log("deptno:"+deptno);
+		String dname = request.getParameter("dname"); if(dname == null) dname=""; log("dname:"+dname);
+		String loc = request.getParameter("loc"); if(loc == null || loc.trim().equals("")) loc="0"; log("mgr:"+loc);
+
+		if(!dname.equals("")){
+			Dept ins = new Dept(new Integer(deptno), dname, loc);
 		
-		// 2. 모델
-		if(ename == null) ename = "";
-		if(job == null) job = "";
+			A02_DeptDao dao = new A02_DeptDao();
+			dao.insertDept(ins);
+		}
 		
-		A01_Dao dao = new A01_Dao();
-		request.setAttribute("empList", dao.empList2(ename, job));
-		
-		// 3. view처리
-		String page = "a11_mvc/a03_empList.jsp";
+		// 3. view호출.
+		String page = "a11_mvc/a04_deptInsert.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(page);
 		rd.forward(request, response);
-		
-		
 	}
 
 }

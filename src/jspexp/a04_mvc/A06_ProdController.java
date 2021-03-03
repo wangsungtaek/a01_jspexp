@@ -41,7 +41,7 @@ public class A06_ProdController extends HttpServlet {
 		
 		A03_ShopDao dao = new A03_ShopDao();
 		request.setAttribute("prodList", dao.shopList(pname, fromPrice, toPrice));
-		request.getRequestDispatcher("a00_exp/a12_0302/a01_exp.jsp").forward(request, response);
+		request.getRequestDispatcher("a00_exp/a13_0303/prodList.jsp").forward(request, response);
 	}
 
 }
