@@ -33,6 +33,13 @@ public class A04_EmpInsController extends HttpServlet {
 	1. 초기화면 호출
 	2. 등록 처리.
 	
+	# 일반적으로 업무 단위로 controller를 하나를 만들고,
+	1. 기능별 메서드를 선언추가형식으로
+		- 조회 메서드 선언
+		- 상세화면 처리 메서드 선언
+		- 등록 메서드 선언
+	2. 위에 내용은 각 화면별로
+		<input type="hidden" name="proc"/>
 	
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

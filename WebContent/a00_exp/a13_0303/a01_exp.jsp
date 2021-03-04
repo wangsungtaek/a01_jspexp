@@ -12,8 +12,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" 
-   href="${path}/a00_com/a00_com.css">
 <style>
 
 </style>
@@ -41,6 +39,9 @@
  --%>
 <%--
 [하] 2. MVC 패턴에서 상세화면에서 수정과 삭제 처리시 요청값의 내용과 조건에 따른 처리를 기술하세요.
+ 	request.getParameter("proc")의 값에 따라 조건 처리
+	 	upt = 수정
+	 	del = 삭제
  --%>
 <%--
 [중] 3. MVC 패턴으로 물품 상세화면/수정 처리를 해보세요.
@@ -48,10 +49,48 @@
 <%--
 [하] 1. 좋아요/싫어요 버튼을 클릭시, 하단에 하트가 하나씩 늘어나든지/줄어들던지 하세요(단 한번만)
  --%>
+	<button id="favor">좋아요</button>
+	<button id="unfavor">싫어요</button>
+	<div>
+		<h4>하트</h4>
+		<h4>하트</h4>
+	</div>
+	
+<script>
+	$('#favor').one("click", function(){
+		$('div').append("<h4>하트</h4>");
+	});
+	$('#unfavor').one("click", function(){
+		console.log($('div').children(0).eq(0));
+		$('div').children(0).eq(0).remove(0);		
+	});
+
+</script>
+	
 <%--
 [중] 2. 임의의 구구단 문제를 나오게 하고, 정답확인을 클릭시 정답여부를 나오게 한다.
         5초가 지나도 정답여부를 출력하게 처리하세요.
  --%>
+<%
+	int x = (int)Math.floor(Math.random()*8+2);
+	int y = (int)Math.floor(Math.random()*9+1);
+	request.setAttribute("x", x);
+	request.setAttribute("y", y);
+%>	
 	
+	<input type="text" value="${x}" name="x"/> x <input type="text" value="${y}" name="y"/> =
+	<input type="text" value="" name="answer" />
+	<input type="button" id="submit" value="정답확인"/>
+<script>
+	$('#submit').on("click",function(){
+		console.log($('[name=x]').val());
+		var answer = $('[name=x]').val() * $('[name=y]').val();
+		console.log(answer);
+		$('[name=answer]').val(answer);
+	});
+	setTimeout(function(){
+		$('#submit').trigger("click");
+	},5000);
+</script>
 </body>
 </html>
