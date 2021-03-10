@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="/jspexp/a00_com/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+<!-- 
+[하] 1. focus/blur이벤트의 기본 형식을 기술하세요.
+	$(선택자).focus(function()){
+		처리할 내용.
+	)};
+	$(선택자).blur(function()){
+		처리할 내용.
+	)};
+ -->
+<!-- 
+[하] 2. [0  ] X [0  ] [정답]  : 왼쪽과 같이 3개의 input창을 만들고
+	입력할 기존 문자가 없어지고 정답 부분을 클릭시,
+	왼쪽에 입력된 값을 연산하여 출력처리하세요.
+ -->
+<input id="num01"/> * <input id="num02"/>
+<input type="button" id="result" value="정 답"/>
+<div id="div01"></div>
+<script>
+	$("#result").on("click", function(){
+		var num01 = $("#num01").val();
+		var num02 = $("#num02").val();
+		var tot = eval(num01+"*"+num02);
+		$('#div01').text(num01+"X"+num02+"="+tot);
+	});
+</script>
+<!-- 
+[중] 3. 아래와 같은 내용에 select를 선택했을 때, 구매 총액이 하단에 표기되게 하세요.
+        사과    3000  [0~10]
+        바나나   4500  [0~10]
+        딸기   12000  [0~10]
+          구매 총액  @@@
+ -->
+사과 <input value="3000" id="prod01"/>
+<select id="sel01">
+	<option value="0">선택</option>
+	<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+	<option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+</select><br>
+바나나 <input value="4500" id="prod02"/>
+<select id="sel02">
+	<option value="0">선택</option>
+	<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+	<option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+</select><br>
+딸기 <input value="12000" id="prod03"/>
+<select id="sel03">
+	<option value="0">선택</option>
+	<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+	<option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+</select><br>
+구매 총액 : <span></span>
+<script>
+	var tot01 = 0;
+	var tot02 = 0;
+	var tot03 = 0;
+	$('#sel01').change(function(){
+		var price = $('#prod01').val();
+		var cnt = $('#sel01>option:selected').text();
+		tot01 = eval(price*cnt);
+		result();
+	});
+	$('#sel02').change(function(){
+		var price = $('#prod02').val();
+		var cnt = $('#sel02>option:selected').text();
+		tot02 = eval(price*cnt);
+		result();
+	});
+	$('#sel03').change(function(){
+		var price = $('#prod03').val();
+		var cnt = $('#sel03>option:selected').text();
+		tot03 = eval(price*cnt);
+		result();
+	});
+	var result = function(){
+		tot = tot01 + tot02 + tot03;
+		$('span').text(tot);
+	}
+	
+</script>
+<!-- 
+[하] 4. 3X3테이블을 만들고, 초기에 중앙에 배경색상으로 노랑색으로 되어 있다가,
+	키이벤트 좌우상하를 누르고 있을 때는, 중앙에 있는 노랑색 배경색상이 해당 방향으로 이동되어 있다가,
+	키를 떼었을 때, 다시 중앙으로 돌아오게 이벤트 처리하세요.
+ -->
+	<table>
+		<tr><td>1</td><td>2</td><td>3</td></tr>
+		<tr><td>4</td><td style="background: yellow">5</td><td>6</td></tr>
+		<tr><td>7</td><td>8</td><td>9</td></tr>
+	</table>
+<script>
+	var table = $('table td');
+	$('body').keydown(function(evnet){
+		console.log(event.keyCode);
+		if(event.keyCode >= 37 && event.keyCode <= 40)
+			table.eq(4).css("background",'white');
+		if(event.keyCode == 37)
+			table.eq(3).css("background",'yellow');
+		else if(event.keyCode == 38)
+			table.eq(1).css("background",'yellow');
+		else if(event.keyCode == 39)
+			table.eq(5).css("background",'yellow');
+		else if(event.keyCode == 40)
+			table.eq(7).css("background",'yellow');
+	});
+	$('body').keyup(function(evnet){
+		if(event.keyCode >= 37 && event.keyCode <= 40)
+			table.eq(4).css("background",'yellow');
+		if(event.keyCode == 37)
+			table.eq(3).css("background",'white');
+		else if(event.keyCode == 38)
+			table.eq(1).css("background",'white');
+		else if(event.keyCode == 39)
+			table.eq(5).css("background",'white');
+		else if(event.keyCode == 40)
+			table.eq(7).css("background",'white');
+	});
+</script>
+</body>
+</html>

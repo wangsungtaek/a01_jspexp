@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="/jspexp/a00_com/jquery-3.5.1.js"></script>
+</head>
+<body>
+<!-- 
+[하] 1. filter기능 메서드를 이용해서, 
+	5X5테이블에서 각 td의 3개단위로 배경색상이 다르게 출력,
+	tr의 짝홀번째 글자가 다르게 출력처리하세요. end()메서드 활용.
+-->
+	<table>
+		<tr><td></td><td></td><td></td><td></td><td></td><tr>
+		<tr><td></td><td></td><td></td><td></td><td></td><tr>
+		<tr><td></td><td></td><td></td><td></td><td></td><tr>
+		<tr><td></td><td></td><td></td><td></td><td></td><tr>
+		<tr><td></td><td></td><td></td><td></td><td></td><tr>
+	</table>
+<script>
+	$('td').each(function(idx, ele){
+		$(this).text(idx+1);
+	});
+	$('td').filter(function(idx, ele){
+		return idx%3 == 0;
+	}).css('background', 'yellow')
+	.end().filter(function(idx, ele){
+		return idx%3 == 1;
+	}).css('background', 'green')
+	.end().filter(function(idx, ele){
+		return idx%3 == 2;
+	}).css('background', 'blue')
+	.end().filter(function(idx, ele){
+		return idx%2 == 0;
+	}).css('font-size', '30px');
+	
+</script>
+</body>
+</html>
